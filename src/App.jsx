@@ -7,6 +7,7 @@ import './App.css';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [language, setLanguage] = useState('en');
 
   const login = () => {
     setIsAuthenticated(true);
@@ -16,15 +17,19 @@ function App() {
     setIsAuthenticated(false);
   };
 
+  const changeLanguage = () => {
+    setLanguage(prevLang => prevLang === 'en' ? 'hi' : 'en');
+  };
+
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<LoginPage login={login} isAuthenticated={isAuthenticated} />} />
+        <Route path="/login" element={<LoginPage login={login} isAuthenticated={isAuthenticated} language={language} />} />
         <Route
           path="/dashboard"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <DashboardPage logout={logout} />
+              <DashboardPage logout={logout} changeLanguage={changeLanguage} language={language} />
             </PrivateRoute>
           }
         />

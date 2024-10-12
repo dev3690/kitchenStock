@@ -6,7 +6,7 @@ function LoginForm({ onLogin }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (username === 'user' && password === 'password') {
+        if (username === 'admin' && password === 'admin123') {
             onLogin();
         } else {
             alert('Invalid credentials');
@@ -18,7 +18,7 @@ function LoginForm({ onLogin }) {
 
             <div className="login-form-container">
                 <div className="login-icon">
-                    <h1>Login Page</h1>
+                    <h1>Login Page </h1>
                     <img src="src\assets\laptop_image.jpg" alt="Laptop Image" height={200} width={200} />
                 </div>
                 <form onSubmit={handleSubmit} className="login-form">
@@ -30,7 +30,9 @@ function LoginForm({ onLogin }) {
                             onChange={(e) => setUsername(e.target.value)}
                             required
                         />
-                        <span className="input-icon">👤</span>
+                        <span className="input-icon">
+                            <img src="src\assets\user.png" alt="Laptop Image" height={20} width={20} />
+                        </span>
                     </div>
                     <div className="input-group">
                         <input
@@ -40,7 +42,9 @@ function LoginForm({ onLogin }) {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
-                        <span className="input-icon">🔒</span>
+                        <span className="input-icon">
+                            <img src="src\assets\lock.png" alt="Laptop Image" height={20} width={20} />
+                        </span>
                     </div>
                     <button type="submit">Login</button>
                 </form>
