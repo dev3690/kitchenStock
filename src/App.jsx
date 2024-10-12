@@ -3,6 +3,8 @@ import { useState } from 'react';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import PrivateRoute from './components/PrivateRoute';
+import DetailPradeshPage from './pages/DetailPradeshPage';
+import VangiForm from './pages/VangiForm';
 import './App.css';
 
 function App() {
@@ -31,6 +33,22 @@ function App() {
             <PrivateRoute isAuthenticated={isAuthenticated}>
               <DashboardPage logout={logout} changeLanguage={changeLanguage} language={language} />
             </PrivateRoute>
+          }
+        />
+        <Route
+          path="/detail/:id"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <DetailPradeshPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/vangi-form"
+          element={
+              <VangiForm />
+            // <PrivateRoute isAuthenticated={isAuthenticated}>
+            // </PrivateRoute>
           }
         />
         <Route path="*" element={<Navigate to="/login" replace />} />

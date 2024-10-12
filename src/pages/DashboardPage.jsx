@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/DashboardPage.css';
 
 function DashboardPage({ logout, changeLanguage }) {
+  const navigate = useNavigate(); // Get the navigate function
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      navigate('/login');
+    }
+  }, [navigate]);
+
   const cardData = [
     { title: 'Harisumiran Pradesh', score: 7, contact: '9648264578' },
     { title: 'Harisumiran Pradesh', score: 7, contact: '9648264578' },
@@ -20,16 +30,16 @@ function DashboardPage({ logout, changeLanguage }) {
         <h1 className="dashboard-header-name">Annakut Mahotsav 2024</h1>
         <div className="header-icons">
           <button className="icon-button" onClick={changeLanguage}>
-          <img src="src\assets\languages.png" alt="Change Language" className="icon" />
+            <img src="src\assets\languages.png" alt="Change Language" className="icon" />
           </button>
           <button className="icon-button" onClick={logout}>
-          <img src="src\assets\logout.png" alt="Change Language" className="icon" />
+            <img src="src\assets\logout.png" alt="Logout" className="icon" />
           </button>
         </div>
       </div>
       <div className="card-container">
         {cardData.map((card, index) => (
-          <div key={index} className="card">
+          <div key={index} className="card" onClick={() => navigate(`/detail/${index + 1}`)}>
             <h2 className="card-title">{card.title}</h2>
             <div className="circular-progress">
               <svg viewBox="0 0 36 36" className="circular-chart">
@@ -51,6 +61,9 @@ function DashboardPage({ logout, changeLanguage }) {
           </div>
         ))}
       </div>
+      <button className="floating-download-button">
+        <img src="src\assets\downloads.png" alt="Download" className="download-icon" />
+      </button>
     </div>
   );
 }

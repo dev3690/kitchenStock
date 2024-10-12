@@ -1,0 +1,151 @@
+.detail-pradesh-container {
+  background-color: #fff1e6;
+  min-height: 100vh;
+  min-width: 70vw;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.detail-pradesh-header {
+  display: flex;
+  justify-content: space-between;
+  /* justify-content: stretch; */
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.detail-pradesh-header h1 {
+  font-size: 34px;
+  font-weight: bold;
+  color: #333;
+}
+
+.header-icons {
+  display: flex;
+  gap: 0;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  margin: 5px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.pradesh-info {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #666;
+  margin: 10px;
+  
+}
+
+.table-container {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+  margin: 10px;
+
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background-color: #f8f8f8;
+  font-weight: bold;
+  color: #333;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+    .detail-pradesh-container {
+        margin-left: 40px;    
+    }
+  .detail-pradesh-header {
+    display: flex;
+    /* justify-content: space-between; */
+    justify-content: stretch;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  /* .detail-pradesh-header h1 {
+    font-size: 18px;
+    margin-right: 10px;
+  } */
+
+  .header-icons {
+    gap: 0px;
+  }
+
+  .icon-button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .icon {
+    width: 28px;
+    height: 28px;
+  }
+  table {
+    width: 100%;
+    max-width: 140%;
+    border-collapse: collapse;
+  }
+}
+
+@media (max-width: 480px) {
+  .detail-pradesh-container {
+    padding: 10px;
+    
+  }
+
+  .detail-pradesh-header h1 {
+    font-size: 26px;
+    padding: 10px;
+  }
+
+  .icon-button {
+    width: 68px;
+    height: 38px;
+  }
+
+  .icon {
+    width: 28px;
+    height: 28px;
+  }
+  table {
+    width: 100%;
+    max-width: 140%;
+    padding: 10px;
+    border-collapse: collapse;
+  }
+}
