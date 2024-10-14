@@ -10,3 +10,9 @@ where he will assign new item to pradesh successfully
 table name 
 pradesh
 
+===================================================
+
+remaining part
+
+new pradesh name list
+

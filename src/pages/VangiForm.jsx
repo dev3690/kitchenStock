@@ -19,7 +19,11 @@ function VangiForm() {
   const [pradeshData, setPradeshData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [currentLanguage, setCurrentLanguage] = useState('eng');
+  
+  const handleLanguageChange = () => {
+    setCurrentLanguage(prev => prev === 'eng' ? 'guj' : 'eng');
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -83,12 +87,12 @@ function VangiForm() {
   return (
     <div className="vangi-form-container">
       <div className="vangi-form-header">
-        <h1>Harisumiran Pradesh ▼</h1>
+        <h1>{currentLanguage === 'eng' ? 'Harisumiran Pradesh ▼' : 'હરિસુમિરન પ્રદેશ ▼'}</h1>
         <div className="header-icons">
           <button className="icon-button">
             <img src={infoIcon} alt="Info" className="icon" />
           </button>
-          <button className="icon-button">
+          <button className="icon-button" onClick={handleLanguageChange}>
             <img src={languageIcon} alt="Language" className="icon" />
           </button>
         </div>
@@ -100,7 +104,7 @@ function VangiForm() {
       ) : (
         <form onSubmit={handleSubmit} className="vangi-form">
           <div className="form-group">
-            <label htmlFor="pradeshId">Pradesh Name :</label>
+            <label htmlFor="pradeshId">{currentLanguage === 'eng' ? 'Pradesh Name :' : 'પ્રદેશ નામ :'}</label>
             <select
               id="pradeshId"
               name="pradeshId"
@@ -108,16 +112,16 @@ function VangiForm() {
               onChange={handleChange}
               required
             >
-              <option value="">Select Pradesh</option>
+              <option value="">{currentLanguage === 'eng' ? 'Select Pradesh' : 'પ્રદેશ પસંદ કરો'}</option>
               {pradeshData.map((pradesh) => (
                 <option key={pradesh.pId} value={pradesh.pId}>
-                  {pradesh.newNameEng}
+                  {currentLanguage === 'eng' ? pradesh.newNameEng : pradesh.newNameGuj}
                 </option>
               ))}
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="itemId">Item :</label>
+            <label htmlFor="itemId">{currentLanguage === 'eng' ? 'Item :' : 'વસ્તુ :'}</label>
             <select
               id="itemId"
               name="itemId"
@@ -125,45 +129,45 @@ function VangiForm() {
               onChange={handleChange}
               required
             >
-              <option value="">Select Item</option>
+              <option value="">{currentLanguage === 'eng' ? 'Select Item' : 'વસ્તુ પસંદ કરો'}</option>
               {itemData.map((item) => (
                 <option key={item.itemId} value={item.itemId}>
-                  {item.nameEng}
+                  {currentLanguage === 'eng' ? item.nameEng : item.nameGuj}
                 </option>
               ))}
             </select>
           </div>
           <div className="form-row">
             <div className="form-group">
-              <label htmlFor="quantity">Quantity :</label>
+              <label htmlFor="quantity">{currentLanguage === 'eng' ? 'Quantity :' : 'જથ્થો :'}</label>
               <input type="number" id="quantity" name="quantity" value={formData.quantity} onChange={handleChange} required />
             </div>
             <div className="form-group">
-              <label htmlFor="unit">Unit :</label>
+              <label htmlFor="unit">{currentLanguage === 'eng' ? 'Unit :' : 'એકમ :'}</label>
               <select id="unit" name="unit" value={formData.unit} onChange={handleChange} required>
-                <option value="">Select Unit</option>
+                <option value="">{currentLanguage === 'eng' ? 'Select Unit' : 'એકમ પસંદ કરો'}</option>
                 <option value="Kg">Kg</option>
                 <option value="Box">Box</option>
               </select>
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="deliveryPersonName">Delivery Person Name :</label>
+            <label htmlFor="deliveryPersonName">{currentLanguage === 'eng' ? 'Delivery Person Name :' : 'ડિલિવરી વ્યક્તિનું નામ :'}</label>
             <input type="text" id="deliveryPersonName" name="deliveryPersonName" value={formData.deliveryPersonName} onChange={handleChange} />
           </div>
           <div className="form-group">
-            <label htmlFor="contactNumber">Contact Number :</label>
+            <label htmlFor="contactNumber">{currentLanguage === 'eng' ? 'Contact Number :' : 'સંપર્ક નંબર :'}</label>
             <input type="tel" id="contactNumber" name="contactNumber" value={formData.contactNumber} onChange={handleChange} />
           </div>
           <div className="form-group">
-            <label htmlFor="reference">Reference :</label>
+            <label htmlFor="reference">{currentLanguage === 'eng' ? 'Reference :' : 'સંદર્ભ :'}</label>
             <input type="text" id="reference" name="reference" value={formData.reference} onChange={handleChange} />
           </div>
           <div className="form-group">
-            <label htmlFor="remarks">Remarks :</label>
+            <label htmlFor="remarks">{currentLanguage === 'eng' ? 'Remarks :' : 'નોંધ :'}</label>
             <input type="text" id="remarks" name="remarks" value={formData.remarks} onChange={handleChange} />
           </div>
-          <button type="submit" className="submit-button">Submit</button>
+          <button type="submit" className="submit-button">{currentLanguage === 'eng' ? 'Submit' : 'સબમિટ કરો'}</button>
         </form>
       )}
     </div>
