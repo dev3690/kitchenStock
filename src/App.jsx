@@ -1,59 +1,68 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import PrivateRoute from './components/PrivateRoute';
 import DetailPradeshPage from './pages/DetailPradeshPage';
 import VangiForm from './pages/VangiForm';
 import './App.css';
+import { AuthProvider, AuthContext } from './context/AuthContext';
+
+
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, isLoading } = useContext(AuthContext);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  return children;
+};
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [language, setLanguage] = useState('en');
-
-  const login = () => {
-    setIsAuthenticated(true);
-  };
-
-  const logout = () => {
-    setIsAuthenticated(false);
-  };
 
   const changeLanguage = () => {
     setLanguage(prevLang => prevLang === 'en' ? 'hi' : 'en');
   };
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<LoginPage login={login} isAuthenticated={isAuthenticated} language={language} />} />
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute isAuthenticated={isAuthenticated}>
-              <DashboardPage logout={logout} changeLanguage={changeLanguage} language={language} />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/detail/:id"
-          element={
-            <PrivateRoute isAuthenticated={isAuthenticated}>
-              <DetailPradeshPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/vangi-form"
-          element={
-              <VangiForm />
-            // <PrivateRoute isAuthenticated={isAuthenticated}>
-            // </PrivateRoute>
-          }
-        />
-        <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginPage language={language} />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardPage changeLanguage={changeLanguage} language={language} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/detail/:id"
+            element={
+              <ProtectedRoute>
+                <DetailPradeshPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/vangi-form"
+            element={
+              <ProtectedRoute>
+                <VangiForm />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

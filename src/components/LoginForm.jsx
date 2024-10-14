@@ -1,21 +1,29 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+import { loginApi, callAxiosApi } from '../api_utils';
 
-function LoginForm({ onLogin }) {
-    const [username, setUsername] = useState('');
+function LoginForm({ language }) {
+    const [mobile, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (username === 'admin' && password === 'admin123') {
-            onLogin();
-        } else {
+        try {
+            const response = await callAxiosApi(loginApi, { mobile, password });
+            const token = response.data.token; // Adjust based on your API response
+            login(token);
+            navigate('/dashboard');
+        } catch (error) {
+            console.error('Login failed:', error);
             alert('Invalid credentials');
         }
     };
 
     return (
         <div className="login-container">
-
             <div className="login-form-container">
                 <div className="login-icon">
                     <h1>Login Page </h1>
@@ -25,13 +33,13 @@ function LoginForm({ onLogin }) {
                     <div className="input-group">
                         <input
                             type="text"
-                            placeholder="Username"
-                            value={username}
+                            placeholder="Mobile"
+                            value={mobile}
                             onChange={(e) => setUsername(e.target.value)}
                             required
                         />
                         <span className="input-icon">
-                            <img src="src\assets\user.png" alt="Laptop Image" height={20} width={20} />
+                            <img src="src\assets\user.png" alt="User Icon" height={20} width={20} />
                         </span>
                     </div>
                     <div className="input-group">
@@ -43,7 +51,7 @@ function LoginForm({ onLogin }) {
                             required
                         />
                         <span className="input-icon">
-                            <img src="src\assets\lock.png" alt="Laptop Image" height={20} width={20} />
+                            <img src="src\assets\lock.png" alt="Lock Icon" height={20} width={20} />
                         </span>
                     </div>
                     <button type="submit">Login</button>
