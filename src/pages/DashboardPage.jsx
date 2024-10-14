@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/DashboardPage.css";
-import { dashboardApi, callAxiosApi } from "../api_utils";
+import { dashboardApi, callAxiosApi, getPradeshItemsDetails } from "../api_utils";
 import { AuthContext } from '../context/AuthContext';
 
 function DashboardPage({ changeLanguage, language }) {
   const navigate = useNavigate();
   const [cardData, setCardData] = useState([]);
   const { logout } = useContext(AuthContext);
+  const [currentLanguage, setCurrentLanguage] = useState('eng');
 
   useEffect(() => {
     const fetchPradeshData = async () => {
@@ -23,12 +24,25 @@ function DashboardPage({ changeLanguage, language }) {
     fetchPradeshData();
   }, []);
 
+  const handleCardClick = async (pradeshId) => {
+    try {
+      const response = await callAxiosApi(getPradeshItemsDetails(pradeshId), { pradeshId });
+      console.log('Pradesh Item Details:', response.data);
+      navigate(`/detail/${pradeshId}`);
+    } catch (error) {
+      console.error("Error fetching pradesh item details:", error);
+    }
+  };
+  const handleLanguageChange = () => {
+    setCurrentLanguage(prev => prev === 'eng' ? 'guj' : 'eng');
+  };
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
         <h1 className="dashboard-header-name">Annakut Mahotsav 2024</h1>
         <div className="header-icons">
-          <button className="icon-button" onClick={changeLanguage}>
+          <button className="icon-button" onClick={handleLanguageChange}>
             <img
               src="src\assets\languages.png"
               alt="Change Language"
@@ -45,10 +59,12 @@ function DashboardPage({ changeLanguage, language }) {
           <div
             key={pradesh.pId || index}
             className="card"
-            onClick={() => navigate(`/detail/${pradesh.pId}`)}
+            onClick={() => handleCardClick(pradesh.pId)}
           >
-            <h2 className="card-title">{pradesh.newNameEng || "Pradesh Name"}</h2>
-            <p>{pradesh.pSantEng || "Pradesh Sant Name"}</p>
+            <h2 className="card-title">
+              {currentLanguage === 'eng' ? (pradesh.newNameEng || "Pradesh Name") : (pradesh.newNameGuj || "પ્રદેશ નામ")}
+            </h2>
+            <p>{currentLanguage === 'eng' ? (pradesh.pSantEng || "Pradesh Sant Name") : (pradesh.pSantGuj || "પ્રદેશ સંત નામ")}</p>
             <div className="circular-progress">
               <svg viewBox="0 0 36 36" className="circular-chart">
                 <path
@@ -70,9 +86,9 @@ function DashboardPage({ changeLanguage, language }) {
               </svg>
             </div>
             <p className="card-details">
-              Contact Person: {pradesh.contPerson || "N/A"}
+              {currentLanguage === 'eng' ? 'Contact Person: ' : 'સંપર્ક વ્યક્તિ: '}{pradesh.contPerson || "N/A"}
               <br />
-              Contact Number: {pradesh.contPersonNo || "N/A"}
+              {currentLanguage === 'eng' ? 'Contact Number: ' : 'સંપર્ક નંબર: '}{pradesh.contPersonNo || "N/A"}
             </p>
           </div>
         ))}

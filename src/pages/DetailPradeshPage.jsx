@@ -1,41 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/DetailPradeshPage.css';
 import addIcon from '../assets/add.png';
 import infoIcon from '../assets/information-button.png';
 import languageIcon from '../assets/languages.png';
 import AddItemPopup from '../components/AddItemPopup';
+import { callAxiosApi, getPradeshItemsDetails } from '../api_utils';
 
 function DetailPradeshPage() {
   const { id } = useParams();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [pradeshData, setPradeshData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Mock data - replace with actual data fetching logic
-  const pradeshData = {
-    title: 'Harisumiran Pradesh',
-    guruprasad: 'Guruprasad swami',
-    contact: '9648264578',
-    items: [
-      { srNo: 1, itemList: 'samosa', receiveAssign: '7/12', unit: 'Kg' },
-      { srNo: 2, itemList: 'Thepla', receiveAssign: '8/15', unit: 'Box' },
-      { srNo: 3, itemList: 'Masala Puri', receiveAssign: '7/16', unit: 'Kg' },
-      { srNo: 4, itemList: 'Bhel', receiveAssign: '8/56', unit: 'Box' },
-      { srNo: 5, itemList: 'samosa', receiveAssign: '7/12', unit: 'Kg' },
-      { srNo: 6, itemList: 'Thepla', receiveAssign: '8/15', unit: 'Box' },
-      { srNo: 7, itemList: 'Masala Puri', receiveAssign: '7/16', unit: 'Kg' },
-      { srNo: 8, itemList: 'Bhel', receiveAssign: '8/56', unit: 'Box' },
-    ]
+  const fetchPradeshData = async () => {
+    try {
+      const response = await callAxiosApi(getPradeshItemsDetails(id), { pradeshId: id });
+      setPradeshData(response.data.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching pradesh item details:", error);
+      setError("Failed to load pradesh details. Please try again later.");
+      setIsLoading(false);
+    }
   };
+
+  useEffect(() => {
+    fetchPradeshData();
+  }, [id]);
 
   const handleAddItem = (newItem) => {
-    // Handle adding the new item to the list
-    console.log('New item:', newItem);
+    setPradeshData(prevData => {
+      const formattedNewItem = {
+        itemId: newItem.itemId,
+        nameEng: newItem.nameEng || 'Unknown Item',
+        totalReceived: 0,
+        totalAssigned: newItem.qty,
+        unit: newItem.unit
+      };
+  
+      const updatedItems = prevData.items.map(item => 
+        item.itemId === formattedNewItem.itemId 
+          ? { ...item, totalAssigned: parseInt(item.totalAssigned) + parseInt(formattedNewItem.totalAssigned) }
+          : item
+      );
+  
+      if (!updatedItems.some(item => item.itemId === formattedNewItem.itemId)) {
+        updatedItems.push(formattedNewItem);
+      }
+  
+      return { ...prevData, items: updatedItems };
+    });
+    fetchPradeshData(); // Refetch data after adding new item
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div className="detail-pradesh-container">
       <div className="detail-pradesh-header">
-        <h1>{pradeshData.title}</h1>
+        <h1>{pradeshData.newNameEng}</h1>
         <div className="header-icons">
           <button className="icon-button" onClick={() => setIsPopupOpen(true)}>
             <img src={addIcon} alt="Plus" className="icon" height={20} width={20} />
@@ -49,8 +80,8 @@ function DetailPradeshPage() {
         </div>
       </div>
       <div className="pradesh-info">
-        <p>{pradeshData.guruprasad}</p>
-        <p>Contact No : {pradeshData.contact}</p>
+        <p>{pradeshData.pSantEng}</p>
+        <p>Contact No : {pradeshData.contPersonNo || 'N/A'}</p>
       </div>
       <div className="table-container">
         <table>
@@ -63,12 +94,12 @@ function DetailPradeshPage() {
             </tr>
           </thead>
           <tbody>
-            {pradeshData.items.map((item) => (
-              <tr key={item.srNo}>
-                <td>{item.srNo}</td>
-                <td>{item.itemList}</td>
-                <td>{item.receiveAssign}</td>
-                <td>{item.unit}</td>
+            {pradeshData.items.map((item, index) => (
+              <tr key={item.itemId}>
+                <td>{index + 1}</td>
+                <td>{item.nameEng}</td>
+                <td>{`${item.totalReceived}/${item.totalAssigned}`}</td>
+                <td>{item.unit || 'N/A'}</td>
               </tr>
             ))}
           </tbody>

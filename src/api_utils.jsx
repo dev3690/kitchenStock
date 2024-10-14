@@ -9,8 +9,10 @@ const localApiUrl = "http://localhost:3690"
 
 const dashboardApi = `${localApiUrl}/dashboard`
 const loginApi = `${localApiUrl}/login`
-
+const getTableData = `${localApiUrl}/getData`
+const assignItemToPradesh = `${localApiUrl}/assignItemToPradesh`
 const getPradeshItemsDetails = (id) => `${localApiUrl}/getPradeshItemsDetails`;
+const addReceiveItem = (id) => `${localApiUrl}/insertData`;
 // const insertData = `${localApiUrl}/insertData`
 // const insertPatient = `${localApiUrl}/insertPatient`
 // const loginApi = `${localApiUrl}/login`
@@ -53,6 +55,6 @@ const callAxiosApi = async (url = "", body = {}) => {
 
 
 export { 
-    dashboardApi, callAxiosApi, getPradeshItemsDetails, loginApi
+    dashboardApi, callAxiosApi, getPradeshItemsDetails, loginApi, getTableData, assignItemToPradesh, addReceiveItem
     // USER, STATUS, getData, PATIENT, deleteData, loginApi, insertData, updateData, birdViewApi,getDashboardData, , insertPatient 
 }

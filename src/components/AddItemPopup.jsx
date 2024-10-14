@@ -1,16 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/AddItemPopup.css';
+import { callAxiosApi, getPradeshItemsDetails, getTableData, assignItemToPradesh } from '../api_utils';
 
 function AddItemPopup({ isOpen, onClose, onSubmit }) {
-  const [name, setName] = useState('');
+  const [itemId, setItemId] = useState('');
   const [unit, setUnit] = useState('');
   const [quantity, setQuantity] = useState('');
-  const [pradesh, setPradesh] = useState('');
+  const [pradeshId, setPradeshId] = useState('');
+  const [itemData, setItemData] = useState([]);
+  const [pradeshData, setPradeshData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const itemResponse = await callAxiosApi(getTableData, { table: "item" });
+        const pradeshResponse = await callAxiosApi(getTableData, { table: "pradesh" });
+        setItemData(itemResponse.data.data);
+        setPradeshData(pradeshResponse.data.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError("Failed to load data. Please try again later.");
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit({ name, unit, quantity, pradesh });
-    onClose();
+    try {
+      const response = await callAxiosApi(assignItemToPradesh, {
+        pId: parseInt(pradeshId),
+        itemId: parseInt(itemId),
+        qty: quantity
+      });
+      console.log('Item assigned successfully:', response.data);
+      const selectedItem = itemData.find(item => item.itemId === parseInt(itemId));
+      onSubmit({
+        itemId: parseInt(itemId),
+        nameEng: selectedItem ? selectedItem.nameEng : 'Unknown Item',
+        qty: quantity,
+        unit: unit
+      });
+      onClose();
+    } catch (error) {
+      console.error('Error assigning item:', error);
+      // You might want to show an error message to the user here
+    }
   };
 
   const handleOverlayClick = (e) => {
@@ -20,6 +60,8 @@ function AddItemPopup({ isOpen, onClose, onSubmit }) {
   };
 
   if (!isOpen) return null;
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="popup-overlay" onClick={handleOverlayClick}>
@@ -27,14 +69,21 @@ function AddItemPopup({ isOpen, onClose, onSubmit }) {
         <h2>Add Items</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="name">Name :</label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+            <label htmlFor="itemId">Item Name :</label>
+            <select
+              id="itemId"
+              value={itemId}
+              onChange={(e) => setItemId(e.target.value)}
               required
-            />
+              className="select-item"
+            >
+              <option value="">Select Item</option>
+              {itemData.map((item) => (
+                <option key={item.itemId} value={item.itemId}>
+                  {item.nameEng}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="form-group">
             <label htmlFor="unit">Unit :</label>
@@ -61,17 +110,20 @@ function AddItemPopup({ isOpen, onClose, onSubmit }) {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="pradesh">Pradesh :</label>
+            <label htmlFor="pradeshId">Pradesh :</label>
             <select
-              id="pradesh"
-              value={pradesh}
-              onChange={(e) => setPradesh(e.target.value)}
+              id="pradeshId"
+              value={pradeshId}
+              onChange={(e) => setPradeshId(e.target.value)}
               required
               className="select-pradesh"
             >
               <option value="">Select Pradesh</option>
-              <option value="Pradesh1">Pradesh 1</option>
-              <option value="Pradesh2">Pradesh 2</option>
+              {pradeshData.map((pradesh) => (
+                <option key={pradesh.pId} value={pradesh.pId}>
+                  {pradesh.newNameEng}
+                </option>
+              ))}
             </select>
           </div>
           <div className="button-group">
