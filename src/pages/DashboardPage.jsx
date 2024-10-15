@@ -118,7 +118,7 @@ function DashboardPage({ changeLanguage, language }) {
       </div>
      <button className="floating-download-button" onClick={handleDownload}>
   <img
-    src="src\assets\downloads.png"
+    src="/assets/downloads.png"
     alt="Download"
     className="download-icon"
   />
