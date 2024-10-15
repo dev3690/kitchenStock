@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import '../styles/AddItemPopup.css';
 import { callAxiosApi, getPradeshItemsDetails, getTableData, assignItemToPradesh } from '../api_utils';
 
-function AddItemPopup({ isOpen, onClose, onSubmit }) {
+function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, currentLanguage }) {
   const [itemId, setItemId] = useState('');
   const [unit, setUnit] = useState('');
   const [quantity, setQuantity] = useState('');
-  const [pradeshId, setPradeshId] = useState('');
+  const [pradeshIdState, setPradeshIdState] = useState('');
   const [itemData, setItemData] = useState([]);
   const [pradeshData, setPradeshData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -66,8 +66,20 @@ function AddItemPopup({ isOpen, onClose, onSubmit }) {
   return (
     <div className="popup-overlay" onClick={handleOverlayClick}>
       <div className="popup-content">
-        <h2>Add Items</h2>
+        <h2>{currentLanguage === 'eng' ? 'Assign New Item' : 'નવી વસ્તુ સોંપો'}</h2>
         <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="pradeshName">
+              {currentLanguage === 'eng' ? 'Pradesh Name' : 'પ્રદેશ નામ'}:
+            </label>
+            <input
+              type="text"
+              id="pradeshName"
+              value={pradeshName}
+              readOnly
+              className="readonly-input"
+            />
+          </div>
           <div className="form-group">
             <label htmlFor="itemId">Item Name :</label>
             <select
@@ -109,12 +121,12 @@ function AddItemPopup({ isOpen, onClose, onSubmit }) {
               required
             />
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label htmlFor="pradeshId">Pradesh :</label>
             <select
               id="pradeshId"
-              value={pradeshId}
-              onChange={(e) => setPradeshId(e.target.value)}
+              value={pradeshIdState}
+              onChange={(e) => setPradeshIdState(e.target.value)}
               required
               className="select-pradesh"
             >
@@ -125,7 +137,7 @@ function AddItemPopup({ isOpen, onClose, onSubmit }) {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
           <div className="button-group">
             <button type="submit" className="submit-button">Submit</button>
             <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>

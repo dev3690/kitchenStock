@@ -4,9 +4,10 @@ import '../styles/DetailPradeshPage.css';
 import addIcon from '../assets/add.png';
 import infoIcon from '../assets/information-button.png';
 import languageIcon from '../assets/languages.png';
-import AddItemPopup from '../components/AddItemPopup';
 import { callAxiosApi, getPradeshItemsDetails } from '../api_utils';
 import InfoPopup from '../components/InfoPopup';
+import VangiForm from './VangiForm';
+
 
 function DetailPradeshPage() {
   const { id } = useParams();
@@ -20,6 +21,7 @@ function DetailPradeshPage() {
     try {
       const response = await callAxiosApi(getPradeshItemsDetails(id), { pradeshId: id });
       setPradeshData(response.data.data);
+      console.log(response.data.data);
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching pradesh item details:", error);
@@ -94,13 +96,13 @@ function DetailPradeshPage() {
             <tr>
               <th>{currentLanguage === 'eng' ? 'Sr No' : 'ક્રમ સંખ્યા'}</th>
               <th>{currentLanguage === 'eng' ? 'Item List' : 'વસ્તુ સૂચિ'}</th>
-              <th>{currentLanguage === 'eng' ? 'Receive/Assign' : 'પ્રાપ્ત/સોંપણી'}</th>
+              <th>{currentLanguage === 'eng' ? 'Received/Assigned' : 'પ્રાપ્ત/સોંપણી'}</th>
               <th>{currentLanguage === 'eng' ? 'Unit ▼' : 'એકમ ▼'}</th>
             </tr>
           </thead>
           <tbody>
             {pradeshData.items.map((item, index) => (
-              <tr key={item.itemId}>
+              <tr key={`${item.itemId}-${index}`}>
                 <td>{index + 1}</td>
                 <td>{currentLanguage === 'eng' ? item.nameEng : item.nameGuj}</td>
                 <td>{`${item.totalReceived}/${item.totalAssigned}`}</td>
@@ -110,11 +112,21 @@ function DetailPradeshPage() {
           </tbody>
         </table>
       </div>
-      <AddItemPopup
-        isOpen={isPopupOpen}
-        onClose={() => setIsPopupOpen(false)}
-        onSubmit={handleAddItem}
-      />
+      {isPopupOpen && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <VangiForm
+              onClose={() => setIsPopupOpen(false)}
+              onSubmit={handleAddItem}
+              currentLanguage={currentLanguage}
+              pradeshId={id}
+              pradeshName={pradeshData.newNameEng}
+              itemIds={pradeshData.items.map(item => item.itemId)} // Pass only the item IDs
+              itemsList={pradeshData.items} // Pass the items list to VangiForm
+            />
+          </div>
+        </div>
+      )}
       <InfoPopup
         isOpen={isInfoPopupOpen}
         onClose={() => setIsInfoPopupOpen(false)}

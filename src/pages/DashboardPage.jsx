@@ -3,13 +3,22 @@ import { useNavigate } from "react-router-dom";
 import "../styles/DashboardPage.css";
 import { dashboardApi, callAxiosApi, getPradeshItemsDetails, downloadPradeshReceivedItems } from "../api_utils";
 import { AuthContext } from '../context/AuthContext';
+import AddItemPopup from '../components/AddItemPopup';
 
 function DashboardPage({ changeLanguage, language }) {
   const navigate = useNavigate();
   const [cardData, setCardData] = useState([]);
   const { logout } = useContext(AuthContext);
   const [currentLanguage, setCurrentLanguage] = useState('eng');
+  const [isAddItemPopupOpen, setIsAddItemPopupOpen] = useState(false);
+  const [selectedPradeshId, setSelectedPradeshId] = useState(null);
+  const [selectedPradeshName, setSelectedPradeshName] = useState(null);
 
+  const handleOpenAddItemPopup = (pradeshId, pradeshName) => {
+    setSelectedPradeshId(pradeshId);
+    setSelectedPradeshName(pradeshName);
+    setIsAddItemPopupOpen(true);
+  };
   useEffect(() => {
     const fetchPradeshData = async () => {
       try {
@@ -28,17 +37,17 @@ function DashboardPage({ changeLanguage, language }) {
     try {
       console.log('Download button clicked');
       const response = await callAxiosApi(downloadPradeshReceivedItems(), {}, 'arraybuffer');
-      
+
       const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       const url = window.URL.createObjectURL(blob);
-      
+
       const a = document.createElement('a');
       a.style.display = 'none';
       a.href = url;
       a.download = 'pradesh_received_items.xlsx';
       document.body.appendChild(a);
       a.click();
-      
+
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
     } catch (error) {
@@ -47,14 +56,8 @@ function DashboardPage({ changeLanguage, language }) {
     }
   };
 
-  const handleCardClick = async (pradeshId) => {
-    try {
-      const response = await callAxiosApi(getPradeshItemsDetails(pradeshId), { pradeshId });
-      console.log('Pradesh Item Details:', response.data);
-      navigate(`/detail/${pradeshId}`);
-    } catch (error) {
-      console.error("Error fetching pradesh item details:", error);
-    }
+  const handleCardClick = (pradeshId) => {
+    navigate(`/detail/${pradeshId}`);
   };
   const handleLanguageChange = () => {
     setCurrentLanguage(prev => prev === 'eng' ? 'guj' : 'eng');
@@ -84,6 +87,14 @@ function DashboardPage({ changeLanguage, language }) {
             className="card"
             onClick={() => handleCardClick(pradesh.pId)}
           >
+            <div className="card-header">
+              <button className="assign-button" onClick={(e) => {
+                e.stopPropagation();
+                handleOpenAddItemPopup(pradesh.pId, currentLanguage === 'eng' ? pradesh.newNameEng : pradesh.newNameGuj);
+              }}>
+                <img src="/assets/add.png" alt="Assign Items" className="icon" />
+              </button>
+            </div>
             <h2 className="card-title">
               {currentLanguage === 'eng' ? (pradesh.newNameEng || "Pradesh Name") : (pradesh.newNameGuj || "પ્રદેશ નામ")}
             </h2>
@@ -116,13 +127,25 @@ function DashboardPage({ changeLanguage, language }) {
           </div>
         ))}
       </div>
-     <button className="floating-download-button" onClick={handleDownload}>
-  <img
-    src="/assets/downloads.png"
-    alt="Download"
-    className="download-icon"
-  />
-</button>
+      <button className="floating-download-button" onClick={handleDownload}>
+        <img
+          src="/assets/downloads.png"
+          alt="Download"
+          className="download-icon"
+        />
+      </button>
+      <AddItemPopup
+        isOpen={isAddItemPopupOpen}
+        onClose={() => setIsAddItemPopupOpen(false)}
+        onSubmit={(newItem) => {
+          // Handle the new item assignment here
+          console.log('New item assigned:', newItem);
+          setIsAddItemPopupOpen(false);
+        }}
+        pradeshId={selectedPradeshId}
+        pradeshName={selectedPradeshName}
+        currentLanguage={currentLanguage}
+      />
     </div>
   );
 }

@@ -99,3 +99,12 @@ select {
     padding: 6px;
   }
 }
+
+.readonly-input {
+  background-color: #f0f0f0;
+  color: #333;
+  cursor: not-allowed;
+  border: 1px solid #ccc;
+  padding: 5px;
+  width: 100%;
+}

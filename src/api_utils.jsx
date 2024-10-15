@@ -1,7 +1,7 @@
 import axios from "axios"
 
-const localApiUrl = "http://27.116.52.24:8052"
-// const localApiUrl = "http://localhost:3690"
+// const localApiUrl = "http://27.116.52.24:8052"
+const localApiUrl = "http://localhost:3690"
 
 // All api routes
 
@@ -10,7 +10,21 @@ const loginApi = `${localApiUrl}/login`
 const getTableData = `${localApiUrl}/getData`
 const assignItemToPradesh = `${localApiUrl}/assignItemToPradesh`
 const getPradeshItemsDetails = (id) => `${localApiUrl}/getPradeshItemsDetails`;
-const addReceiveItem = (id) => `${localApiUrl}/insertData`;
+const addReceiveItem = async (data) => {
+  const url = `${localApiUrl}/insertData`;
+  const requestData = {
+    table: "itemRec",
+    ...data
+  };
+
+  try {
+    const response = await axios.post(url, requestData);
+    return response.data;
+  } catch (error) {
+    console.error('Error in addReceiveItem:', error);
+    throw error;
+  }
+};
 const downloadPradeshReceivedItems = () => `${localApiUrl}/downloadPradeshReceivedItems`;
 // const insertData = `${localApiUrl}/insertData`
 // const insertPatient = `${localApiUrl}/insertPatient`
@@ -53,7 +67,14 @@ const callAxiosApi = async (url = "", body = {}, responseType = 'json') => {
 // const PATIENT = "patient"
 
 
-export { 
-    dashboardApi, callAxiosApi, getPradeshItemsDetails, loginApi, getTableData, assignItemToPradesh, addReceiveItem, downloadPradeshReceivedItems
+export {
+    dashboardApi,
+    callAxiosApi,
+    getPradeshItemsDetails,
+    loginApi,
+    getTableData,
+    assignItemToPradesh,
+    downloadPradeshReceivedItems,
+    addReceiveItem
     // USER, STATUS, getData, PATIENT, deleteData, loginApi, insertData, updateData, birdViewApi,getDashboardData, , insertPatient 
 }

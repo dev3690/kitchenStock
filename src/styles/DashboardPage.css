@@ -71,18 +71,63 @@
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-header {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.assign-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  transition: all 0.3s ease;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.assign-button:hover {
+  background-color: #dd7729;
+}
+
+.assign-button .icon {
+  width: 24px;
+  height: 24px;
+  transition: filter 0.3s ease;
+}
+
+.assign-button:hover .icon {
+  filter: brightness(0) invert(1);
 }
 
 .card-title {
+  margin: 30px 0 10px;
+  text-align: center;
   font-size: 1.2rem;
-  margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .circular-progress {
   width: 100px;
   height: 100px;
-  margin: 0 auto 10px;
+  margin: 0 auto;
 }
 
 .circular-chart {
@@ -98,10 +143,16 @@
 
 .circle {
   fill: none;
-  stroke: #ff9f00;
+  stroke: #dd7729;
   stroke-width: 2.8;
   stroke-linecap: round;
   animation: progress 1s ease-out forwards;
+}
+
+@keyframes progress {
+  0% {
+    stroke-dasharray: 0 100;
+  }
 }
 
 .percentage {
@@ -112,14 +163,9 @@
 }
 
 .card-details {
-  font-size: 0.9rem;
+  margin-top: 10px;
+  font-size: 14px;
   color: #666;
-}
-
-@keyframes progress {
-  0% {
-    stroke-dasharray: 0 100;
-  }
 }
 
 @media (max-width: 768px) {
@@ -151,8 +197,9 @@
   right: 20px;
   width: 60px;
   height: 60px;
+  background-color: #dd7729;
+  color: white;
   border-radius: 50%;
-  background-color: #cc6600;
   border: none;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
@@ -163,7 +210,7 @@
 }
 
 .floating-download-button:hover {
-  background-color: #b35900;
+  /* background-color: #b35900; */
   transform: scale(1.1);
 }
 
@@ -184,4 +231,21 @@
     width: 25px;
     height: 25px;
   }
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.card-actions .icon-button {
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  padding: 5px;
+  transition: background-color 0.3s;
+}
+
+.card-actions .icon-button:hover {
+  background-color: #e0e0e0;
 }

@@ -1,36 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/VangiForm.css';
-import infoIcon from '../assets/information-button.png';
-import languageIcon from '../assets/languages.png';
 import { callAxiosApi, getTableData, addReceiveItem } from '../api_utils';
 
-function VangiForm() {
+function VangiForm({ onClose, onSubmit, currentLanguage, pradeshId, pradeshName, itemIds, itemsList }) {
   const [formData, setFormData] = useState({
-    pradeshId: '',
     itemId: '',
-    quantity: '',
+    pId: pradeshId,
+    qty: '',
     unit: '',
-    deliveryPersonName: '',
-    contactNumber: '',
+    dePerson: '',
+    dePerCont: '',
     reference: '',
-    remarks: ''
+    remark: ''
   });
+
   const [itemData, setItemData] = useState([]);
-  const [pradeshData, setPradeshData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentLanguage, setCurrentLanguage] = useState('eng');
-  
-  const handleLanguageChange = () => {
-    setCurrentLanguage(prev => prev === 'eng' ? 'guj' : 'eng');
-  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const itemResponse = await callAxiosApi(getTableData, { table: "item" });
-        const pradeshResponse = await callAxiosApi(getTableData, { table: "pradesh" });
         setItemData(itemResponse.data.data);
-        setPradeshData(pradeshResponse.data.data);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -43,133 +35,166 @@ function VangiForm() {
   }, []);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+
+    // If the item changes, update the unit
+    if (name === 'itemId') {
+      const selectedItem = itemData.find(item => item.itemId === value);
+      if (selectedItem) {
+        setFormData(prevState => ({
+          ...prevState,
+          unit: selectedItem.unit // Assuming the item data includes a 'unit' field
+        }));
+      }
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const submissionData = {
-      table: "itemRec",
-      itemId: parseInt(formData.itemId),
-      pId: parseInt(formData.pradeshId),
-      qty: formData.quantity,
-      dePerson: formData.deliveryPersonName,
-      dePerCont: formData.contactNumber,
-      reference: formData.reference,
-      remark: formData.remarks
-    };
-
     try {
-      const response = await callAxiosApi(addReceiveItem(), submissionData);
-      if (response && response.data) {
-        console.log('Item received successfully:', response.data);
-        // Reset form or show success message
-        setFormData({
-          pradeshId: '',
-          itemId: '',
-          quantity: '',
-          unit: '',
-          deliveryPersonName: '',
-          contactNumber: '',
-          reference: '',
-          remarks: ''
-        });
-        // You might want to show a success message to the user here
-      } else {
-        throw new Error('Invalid response from server');
+      const response = await addReceiveItem({
+        ...formData,
+        itemId: Number(formData.itemId),
+        pId: Number(formData.pId),
+      });
+      if (response.errorStatus) {
+        throw new Error(response.msg || 'An error occurred while submitting the form');
       }
+      console.log('Item received successfully:', response);
+      onSubmit(formData);
+      onClose();
     } catch (error) {
       console.error('Error receiving item:', error);
-      // You might want to show an error message to the user here
+      setError(error.message || "Failed to receive item. Please try again.");
     }
   };
 
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+
   return (
-    <div className="vangi-form-container">
-      <div className="vangi-form-header">
-        <h1>{currentLanguage === 'eng' ? 'Harisumiran Pradesh ▼' : 'હરિસુમિરન પ્રદેશ ▼'}</h1>
-        <div className="header-icons">
-          <button className="icon-button">
-            <img src={infoIcon} alt="Info" className="icon" />
-          </button>
-          <button className="icon-button" onClick={handleLanguageChange}>
-            <img src={languageIcon} alt="Language" className="icon" />
-          </button>
+    <div className="vangi-form-overlay">
+      <div className="vangi-form-container">
+        <div className="vangi-form-header">
+          <h2>{currentLanguage === 'eng' ? 'Receive Item' : 'વસ્તુ પ્રાપ્ત કરો'}</h2>
+          <button className="close-button" onClick={onClose}>&times;</button>
         </div>
-      </div>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : error ? (
-        <div>{error}</div>
-      ) : (
-        <form onSubmit={handleSubmit} className="vangi-form">
-          <div className="form-group">
-            <label htmlFor="pradeshId">{currentLanguage === 'eng' ? 'Pradesh Name :' : 'પ્રદેશ નામ :'}</label>
-            <select
-              id="pradeshId"
-              name="pradeshId"
-              value={formData.pradeshId}
-              onChange={handleChange}
-              required
-            >
-              <option value="">{currentLanguage === 'eng' ? 'Select Pradesh' : 'પ્રદેશ પસંદ કરો'}</option>
-              {pradeshData.map((pradesh) => (
-                <option key={pradesh.pId} value={pradesh.pId}>
-                  {currentLanguage === 'eng' ? pradesh.newNameEng : pradesh.newNameGuj}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="form-group">
-            <label htmlFor="itemId">{currentLanguage === 'eng' ? 'Item :' : 'વસ્તુ :'}</label>
-            <select
-              id="itemId"
-              name="itemId"
-              value={formData.itemId}
-              onChange={handleChange}
-              required
-            >
-              <option value="">{currentLanguage === 'eng' ? 'Select Item' : 'વસ્તુ પસંદ કરો'}</option>
-              {itemData.map((item) => (
-                <option key={item.itemId} value={item.itemId}>
-                  {currentLanguage === 'eng' ? item.nameEng : item.nameGuj}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="form-row">
+        <div className="vangi-form-content">
+          <form onSubmit={handleSubmit} className="vangi-form">
+            {/* Pradesh Name (disabled) */}
             <div className="form-group">
-              <label htmlFor="quantity">{currentLanguage === 'eng' ? 'Quantity :' : 'જથ્થો :'}</label>
-              <input type="number" id="quantity" name="quantity" value={formData.quantity} onChange={handleChange} required />
+              <label htmlFor="pradeshName">{currentLanguage === 'eng' ? 'Pradesh Name :' : 'પ્રદેશ નામ :'}</label>
+              <input type="text" id="pradeshName" value={pradeshName} disabled />
             </div>
+
+            {/* Item selection */}
             <div className="form-group">
-              <label htmlFor="unit">{currentLanguage === 'eng' ? 'Unit :' : 'એકમ :'}</label>
-              <select id="unit" name="unit" value={formData.unit} onChange={handleChange} required>
-                <option value="">{currentLanguage === 'eng' ? 'Select Unit' : 'એકમ પસંદ કરો'}</option>
-                <option value="Kg">Kg</option>
-                <option value="Box">Box</option>
+              <label htmlFor="itemId">{currentLanguage === 'eng' ? 'Item :' : 'વસ્તુ :'}</label>
+              <select
+                id="itemId"
+                name="itemId"
+                value={formData.itemId}
+                onChange={handleChange}
+                required
+              >
+                <option value="">{currentLanguage === 'eng' ? 'Select Item' : 'વસ્તુ પસંદ કરો'}</option>
+                {itemIds.map((itemId) => (
+                  <option key={itemId} value={itemId}>
+                    {currentLanguage === 'eng' ? itemsList.find(item => item.itemId === itemId)?.nameEng : itemsList.find(item => item.itemId === itemId)?.nameGuj}
+                  </option>
+                ))}
               </select>
             </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="deliveryPersonName">{currentLanguage === 'eng' ? 'Delivery Person Name :' : 'ડિલિવરી વ્યક્તિનું નામ :'}</label>
-            <input type="text" id="deliveryPersonName" name="deliveryPersonName" value={formData.deliveryPersonName} onChange={handleChange} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="contactNumber">{currentLanguage === 'eng' ? 'Contact Number :' : 'સંપર્ક નંબર :'}</label>
-            <input type="tel" id="contactNumber" name="contactNumber" value={formData.contactNumber} onChange={handleChange} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="reference">{currentLanguage === 'eng' ? 'Reference :' : 'સંદર્ભ :'}</label>
-            <input type="text" id="reference" name="reference" value={formData.reference} onChange={handleChange} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="remarks">{currentLanguage === 'eng' ? 'Remarks :' : 'નોંધ :'}</label>
-            <input type="text" id="remarks" name="remarks" value={formData.remarks} onChange={handleChange} />
-          </div>
-          <button type="submit" className="submit-button">{currentLanguage === 'eng' ? 'Submit' : 'સબમિટ કરો'}</button>
-        </form>
-      )}
+
+            {/* Quantity */}
+            <div className="form-group">
+              <label htmlFor="qty">{currentLanguage === 'eng' ? 'Quantity :' : 'જથ્થો :'}</label>
+              <input
+                type="text"
+                id="qty"
+                name="qty"
+                value={formData.qty}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            {/* Unit (read-only) */}
+            <div className="form-group">
+              <label htmlFor="unit">{currentLanguage === 'eng' ? 'Unit :' : 'એકમ :'}</label>
+              <input
+                type="text"
+                id="unit"
+                name="unit"
+                value={formData.unit}
+                readOnly
+              />
+            </div>
+
+            {/* Delivery Person Name */}
+            <div className="form-group">
+              <label htmlFor="dePerson">{currentLanguage === 'eng' ? 'Delivery Person :' : 'ડિલિવરી વ્યક્તિ :'}</label>
+              <input
+                type="text"
+                id="dePerson"
+                name="dePerson"
+                value={formData.dePerson}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            {/* Delivery Person Contact */}
+            <div className="form-group">
+              <label htmlFor="dePerCont">{currentLanguage === 'eng' ? 'Contact Number :' : 'સંપર્ક નંબર :'}</label>
+              <input
+                type="tel"
+                id="dePerCont"
+                name="dePerCont"
+                value={formData.dePerCont}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            {/* Reference */}
+            <div className="form-group">
+              <label htmlFor="reference">{currentLanguage === 'eng' ? 'Reference :' : 'સંદર્ભ :'}</label>
+              <input
+                type="text"
+                id="reference"
+                name="reference"
+                value={formData.reference}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* Remarks */}
+            <div className="form-group">
+              <label htmlFor="remark">{currentLanguage === 'eng' ? 'Remarks :' : 'ટિપ્પણીઓ :'}</label>
+              <textarea
+                id="remark"
+                name="remark"
+                value={formData.remark}
+                onChange={handleChange}
+              ></textarea>
+            </div>
+
+            <div className="button-group">
+              <button type="submit" className="submit-button">
+                {currentLanguage === 'eng' ? 'Submit' : 'સબમિટ કરો'}
+              </button>
+              <button type="button" className="cancel-button" onClick={onClose}>
+                {currentLanguage === 'eng' ? 'Cancel' : 'રદ કરો'}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
