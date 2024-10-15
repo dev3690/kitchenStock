@@ -4,6 +4,12 @@ import '../styles/InfoPopup.css';
 function InfoPopup({ isOpen, onClose, pradeshData, currentLanguage }) {
   if (!isOpen) return null;
 
+  const handleOverlayClick = (e) => {
+    if (e.target.className === 'info-popup-overlay') {
+      onClose();
+    }
+  };
+
   const detailsToShow = [
     { label: { eng: 'Old Name', guj: 'જૂનું નામ' }, value: { eng: 'lastNameEng', guj: 'lastNameGuj' } },
     { label: { eng: 'New Name', guj: 'નવું નામ' }, value: { eng: 'newNameEng', guj: 'newNameGuj' } },
@@ -15,9 +21,9 @@ function InfoPopup({ isOpen, onClose, pradeshData, currentLanguage }) {
   ];
 
   return (
-    <div className="info-popup-overlay">
+    <div className="info-popup-overlay" onClick={handleOverlayClick}>
       <div className="info-popup-content">
-        <button className="close-button" onClick={onClose}>&times;</button>
+        {/* <button className="close-button" onClick={onClose}>&times;</button> */}
         <h2>{currentLanguage === 'eng' ? 'Pradesh Information' : 'પ્રદેશ માહિતી'}</h2>
         {detailsToShow.map((detail, index) => (
           <div key={index} className="info-item">
@@ -25,6 +31,9 @@ function InfoPopup({ isOpen, onClose, pradeshData, currentLanguage }) {
             <span className="info-value">{pradeshData[detail.value[currentLanguage]] || 'N/A'}</span>
           </div>
         ))}
+        <button className="cancel-button" onClick={onClose}>
+          {currentLanguage === 'eng' ? 'Close' : 'બંધ કરો'}
+        </button>
       </div>
     </div>
   );

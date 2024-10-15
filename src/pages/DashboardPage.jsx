@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/DashboardPage.css";
-import { dashboardApi, callAxiosApi, getPradeshItemsDetails } from "../api_utils";
+import { dashboardApi, callAxiosApi, getPradeshItemsDetails, downloadPradeshReceivedItems } from "../api_utils";
 import { AuthContext } from '../context/AuthContext';
 
 function DashboardPage({ changeLanguage, language }) {
@@ -24,6 +24,29 @@ function DashboardPage({ changeLanguage, language }) {
     fetchPradeshData();
   }, []);
 
+  const handleDownload = async () => {
+    try {
+      console.log('Download button clicked');
+      const response = await callAxiosApi(downloadPradeshReceivedItems(), {}, 'arraybuffer');
+      
+      const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const url = window.URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = 'pradesh_received_items.xlsx';
+      document.body.appendChild(a);
+      a.click();
+      
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error("Error downloading Pradesh received items:", error);
+      // You may want to show an error message to the user here
+    }
+  };
+
   const handleCardClick = async (pradeshId) => {
     try {
       const response = await callAxiosApi(getPradeshItemsDetails(pradeshId), { pradeshId });
@@ -44,13 +67,13 @@ function DashboardPage({ changeLanguage, language }) {
         <div className="header-icons">
           <button className="icon-button" onClick={handleLanguageChange}>
             <img
-              src="src\assets\languages.png"
+              src="/assets/languages.png"
               alt="Change Language"
               className="icon"
             />
           </button>
           <button className="icon-button" onClick={logout}>
-            <img src="src\assets\logout.png" alt="Logout" className="icon" />
+            <img src="/assets/logout.png" alt="Logout" className="icon" />
           </button>
         </div>
       </div>
@@ -93,13 +116,13 @@ function DashboardPage({ changeLanguage, language }) {
           </div>
         ))}
       </div>
-      <button className="floating-download-button">
-        <img
-          src="src\assets\downloads.png"
-          alt="Download"
-          className="download-icon"
-        />
-      </button>
+     <button className="floating-download-button" onClick={handleDownload}>
+  <img
+    src="src\assets\downloads.png"
+    alt="Download"
+    className="download-icon"
+  />
+</button>
     </div>
   );
 }
