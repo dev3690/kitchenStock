@@ -1,9 +1,7 @@
 import axios from "axios"
 
-// const localApiUrl = "http://27.116.52.24:8084"
-// const localApiUrl = "http://192.168.29.73:3690"
-// const localApiUrl = "http://localhost:8085"
-const localApiUrl = "http://localhost:3690"
+const localApiUrl = "http://27.116.52.24:8052"
+// const localApiUrl = "http://localhost:3690"
 
 // All api routes
 
