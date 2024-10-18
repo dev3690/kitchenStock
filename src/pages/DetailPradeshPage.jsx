@@ -97,7 +97,7 @@ function DetailPradeshPage() {
               <th>{currentLanguage === 'eng' ? 'Sr No' : 'ક્રમ સંખ્યા'}</th>
               <th>{currentLanguage === 'eng' ? 'Item List' : 'વસ્તુ સૂચિ'}</th>
               <th>{currentLanguage === 'eng' ? 'Received/Assigned' : 'પ્રાપ્ત/સોંપણી'}</th>
-              <th>{currentLanguage === 'eng' ? 'Unit ▼' : 'એકમ ▼'}</th>
+              <th>{currentLanguage === 'eng' ? 'Unit ' : 'એકમ'}</th>
             </tr>
           </thead>
           <tbody>
