@@ -96,7 +96,7 @@ function DashboardPage({ changeLanguage, language }) {
               </button>
             </div>
             <h2 className="card-title">
-              {currentLanguage === 'eng' ? (pradesh.newNameEng || "Pradesh Name") : (pradesh.newNameGuj || "પ્રદેશ નામ")}
+              {currentLanguage === 'eng' ? (pradesh.lastNameEng || "Pradesh Name") : (pradesh.lastNameGuj || "પ્રદેશ નામ")}
             </h2>
             <p>{currentLanguage === 'eng' ? (pradesh.pSantEng || "Pradesh Sant Name") : (pradesh.pSantGuj || "પ્રદેશ સંત નામ")}</p>
             <div className="circular-progress">

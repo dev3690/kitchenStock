@@ -11,14 +11,27 @@ const getTableData = `${localApiUrl}/getData`
 const assignItemToPradesh = `${localApiUrl}/assignItemToPradesh`
 const getPradeshItemsDetails = (id) => `${localApiUrl}/getPradeshItemsDetails`;
 const addReceiveItem = async (data) => {
-  const url = `${localApiUrl}/insertData`;
-  const requestData = {
-    table: "itemRec",
-    ...data
-  };
+  const url = `${localApiUrl}/addReceiveItem`;
+  const { items, ...rest } = data;
+
+  const itemRecEntries = items.filter(item => !item.isOther).map(item => ({
+    table: "itemrecs",
+    ...rest,
+    itemId: Number(item.itemId),
+    qty: Number(item.qty)
+  }));
+
+  const otherEntries = items.filter(item => item.isOther).map(item => ({
+    table: "others",
+    ...rest,
+    itemName: item.itemName,
+    qty: Number(item.qty)
+  }));
+
+  const requestData = [...itemRecEntries, ...otherEntries];
 
   try {
-    const response = await axios.post(url, requestData);
+    const response = await axios.post(url, data);
     return response.data;
   } catch (error) {
     console.error('Error in addReceiveItem:', error);

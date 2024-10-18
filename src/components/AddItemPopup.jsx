@@ -109,6 +109,7 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
               <option value="">Select Unit</option>
               <option value="Kg">Kg</option>
               <option value="Box">Box</option>
+              <option value="Box">Litre</option>
             </select>
           </div>
           <div className="form-group">
