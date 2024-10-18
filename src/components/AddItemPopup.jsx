@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/AddItemPopup.css';
-import { callAxiosApi, getPradeshItemsDetails, getTableData, assignItemToPradesh } from '../api_utils';
+import { callAxiosApi, getTableData, assignItemToPradesh } from '../api_utils';
 
 function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, currentLanguage }) {
   const [itemId, setItemId] = useState('');
   const [unit, setUnit] = useState('');
   const [quantity, setQuantity] = useState('');
-  const [pradeshIdState, setPradeshIdState] = useState('');
   const [itemData, setItemData] = useState([]);
-  const [pradeshData, setPradeshData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -16,9 +14,7 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
     const fetchData = async () => {
       try {
         const itemResponse = await callAxiosApi(getTableData, { table: "item" });
-        const pradeshResponse = await callAxiosApi(getTableData, { table: "pradesh" });
         setItemData(itemResponse.data.data);
-        setPradeshData(pradeshResponse.data.data);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -29,6 +25,17 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
 
     fetchData();
   }, []);
+
+  const handleItemChange = (e) => {
+    const selectedItemId = e.target.value;
+    setItemId(selectedItemId);
+    const selectedItem = itemData.find(item => item.itemId === parseInt(selectedItemId));
+    if (selectedItem) {
+      setUnit(selectedItem.unit);
+    } else {
+      setUnit('');
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,7 +51,8 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
         itemId: parseInt(itemId),
         nameEng: selectedItem ? selectedItem.nameEng : 'Unknown Item',
         qty: quantity,
-        unit: unit
+        unit: unit,
+        updatedData: response.data // Include the updated data from the response
       });
       onClose();
     } catch (error) {
@@ -85,7 +93,7 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
             <select
               id="itemId"
               value={itemId}
-              onChange={(e) => setItemId(e.target.value)}
+              onChange={handleItemChange}
               required
               className="select-item"
             >
@@ -99,18 +107,13 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
           </div>
           <div className="form-group">
             <label htmlFor="unit">Unit :</label>
-            <select
+            <input
+              type="text"
               id="unit"
               value={unit}
-              onChange={(e) => setUnit(e.target.value)}
-              required
-              className="select-unit"
-            >
-              <option value="">Select Unit</option>
-              <option value="Kg">Kg</option>
-              <option value="Box">Box</option>
-              <option value="Box">Litre</option>
-            </select>
+              readOnly
+              className="readonly-input"
+            />
           </div>
           <div className="form-group">
             <label htmlFor="quantity">Quantity :</label>
@@ -122,23 +125,6 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
               required
             />
           </div>
-          {/* <div className="form-group">
-            <label htmlFor="pradeshId">Pradesh :</label>
-            <select
-              id="pradeshId"
-              value={pradeshIdState}
-              onChange={(e) => setPradeshIdState(e.target.value)}
-              required
-              className="select-pradesh"
-            >
-              <option value="">Select Pradesh</option>
-              {pradeshData.map((pradesh) => (
-                <option key={pradesh.pId} value={pradesh.pId}>
-                  {pradesh.newNameEng}
-                </option>
-              ))}
-            </select>
-          </div> */}
           <div className="button-group">
             <button type="submit" className="submit-button">Submit</button>
             <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>

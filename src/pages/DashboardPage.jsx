@@ -63,6 +63,17 @@ function DashboardPage({ changeLanguage, language }) {
     setCurrentLanguage(prev => prev === 'eng' ? 'guj' : 'eng');
   };
 
+  const refreshDashboardData = async () => {
+    try {
+      const response = await callAxiosApi(dashboardApi);
+      if (response.data && response.data.data) {
+        setCardData(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error refreshing dashboard data:", error);
+    }
+  };
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
@@ -90,7 +101,7 @@ function DashboardPage({ changeLanguage, language }) {
             <div className="card-header">
               <button className="assign-button" onClick={(e) => {
                 e.stopPropagation();
-                handleOpenAddItemPopup(pradesh.pId, currentLanguage === 'eng' ? pradesh.newNameEng : pradesh.newNameGuj);
+                handleOpenAddItemPopup(pradesh.pId, currentLanguage === 'eng' ? pradesh.lastNameEng : pradesh.lastNameGuj);
               }}>
                 <img src="/assets/add.png" alt="Assign Items" className="icon" />
               </button>
@@ -134,13 +145,29 @@ function DashboardPage({ changeLanguage, language }) {
           className="download-icon"
         />
       </button>
+
+
       <AddItemPopup
         isOpen={isAddItemPopupOpen}
         onClose={() => setIsAddItemPopupOpen(false)}
         onSubmit={(newItem) => {
-          // Handle the new item assignment here
           console.log('New item assigned:', newItem);
+          // Update the cardData state with the new information
+          setCardData(prevCardData => {
+            return prevCardData.map(card => {
+              if (card.pId === selectedPradeshId) {
+                // Update the specific card with new data
+                return {
+                  ...card,
+                  ...newItem.updatedData
+                };
+              }
+              return card;
+            });
+          });
           setIsAddItemPopupOpen(false);
+          // Refresh the dashboard data
+          refreshDashboardData();
         }}
         pradeshId={selectedPradeshId}
         pradeshName={selectedPradeshName}
