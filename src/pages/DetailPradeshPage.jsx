@@ -89,7 +89,7 @@ function DetailPradeshPage() {
       </div>
       <div className="pradesh-info">
         <p>{currentLanguage === 'eng' ? pradeshData.pSantEng : pradeshData.pSantGuj}</p>
-        <p>{currentLanguage === 'eng' ? 'Contact No : ' : 'સંપર્ક નંબર : '}{pradeshData.contPersonNo || 'N/A'}</p>
+        {/* <p>{currentLanguage === 'eng' ? 'Contact No : ' : 'સંપર્ક નંબર : '}{pradeshData.contPersonNo || 'N/A'}</p> */}
       </div>
       <div className="table-container">
         <table>

@@ -6,7 +6,8 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #fff1e6;
+  /* background-color: #fff1e6; */
+  background-color: #F0D1AF;
 }
 
 .login-page,

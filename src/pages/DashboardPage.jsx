@@ -97,6 +97,7 @@ function DashboardPage({ changeLanguage, language }) {
             key={pradesh.pId || index}
             className="card"
             onClick={() => handleCardClick(pradesh.pId)}
+            style={{ backgroundColor: '#FFFFFF66' }}
           >
             <div className="card-header">
               {userRole === true && (
@@ -108,10 +109,9 @@ function DashboardPage({ changeLanguage, language }) {
                 </button>
               )}
             </div>
-            <h2 className="card-title">
+            <h2 className="card-title" style={{ color: '#333333' }}>
               {currentLanguage === 'eng' ? (pradesh.lastNameEng || "Pradesh Name") : (pradesh.lastNameGuj || "પ્રદેશ નામ")}
             </h2>
-            <p>{currentLanguage === 'eng' ? (pradesh.pSantEng || "Pradesh Sant Name") : (pradesh.pSantGuj || "પ્રદેશ સંત નામ")}</p>
             <div className="circular-progress">
               <svg viewBox="0 0 36 36" className="circular-chart">
                 <path
@@ -127,7 +127,7 @@ function DashboardPage({ changeLanguage, language }) {
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
-                <text x="18" y="18" className="percentage-text">
+                <text x="18" y="18" className="percentage-text" style={{ fill: '#333333' }}>
                   <tspan x="18" dy="-0.2em" className="percentage-value">
                     {Math.round(pradesh.receivedPercentage)}%
                   </tspan>
@@ -137,12 +137,15 @@ function DashboardPage({ changeLanguage, language }) {
                 </text>
               </svg>
             </div>
+            <p className="card-title-sant" style={{ color: '#333333' }}>
+              {currentLanguage === 'eng' ? (pradesh.pSantEng || "Pradesh Sant Name") : (pradesh.pSantGuj || "પ્રદેશ સંત નામ")}
+            </p>
           </div>
         ))}
       </div>
       <button className="floating-download-button" onClick={handleDownload}>
         <img
-          src="/assets/downloads.png"
+          src="/assets/download.png"
           alt="Download"
           className="download-icon"
         />
