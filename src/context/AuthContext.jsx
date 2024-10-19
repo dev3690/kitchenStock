@@ -8,9 +8,11 @@ export const AuthProvider = ({ children }) => {
   const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('token');
+    const storedUserRole = localStorage.getItem('userRole');
     if (token) {
       setIsAuthenticated(true);
+      setUserRole(storedUserRole === 'true');
     }
     setIsLoading(false);
   }, []);
@@ -29,8 +31,10 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('userRole');
   };
 
+  const isAdmin = () => userRole === 'true';
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isLoading, login, logout, userRole }}>
+    <AuthContext.Provider value={{ isAuthenticated, isLoading, login, logout, userRole, isAdmin }}>
       {children}
     </AuthContext.Provider>
   );

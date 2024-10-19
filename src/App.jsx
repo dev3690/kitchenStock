@@ -2,15 +2,13 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import { useState, useContext } from 'react';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
-import PrivateRoute from './components/PrivateRoute';
 import DetailPradeshPage from './pages/DetailPradeshPage';
 import VangiForm from './pages/VangiForm';
 import './App.css';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 
-
-const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, isLoading } = useContext(AuthContext);
+const ProtectedRoute = ({ children, adminOnly = false }) => {
+  const { isAuthenticated, isLoading, isAdmin } = useContext(AuthContext);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -18,6 +16,10 @@ const ProtectedRoute = ({ children }) => {
 
   if (!isAuthenticated) {
     return <Navigate to="/login" />;
+  }
+
+  if (adminOnly && !isAdmin()) {
+    return <Navigate to="/dashboard" />;
   }
 
   return children;
@@ -54,7 +56,7 @@ function App() {
           <Route
             path="/vangi-form"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute adminOnly={true}>
                 <VangiForm />
               </ProtectedRoute>
             }
