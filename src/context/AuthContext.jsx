@@ -15,11 +15,11 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false);
   }, []);
 
-  const login = (token, isMaster) => {
+  const login = (token, role) => {
     setIsAuthenticated(true);
-    setUserRole(isMaster);
+    setUserRole(role);
     localStorage.setItem('token', token);
-    localStorage.setItem('userRole', isMaster.toString());
+    localStorage.setItem('userRole', role);
   };
 
   const logout = () => {

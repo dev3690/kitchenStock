@@ -56,24 +56,19 @@ select {
 
 .button-group {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  gap: 1px;
   margin-top: 20px;
 }
 
-.submit-button,
-.cancel-button {
-  width: 48%;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
+.cancel-button,
 .submit-button {
-  background-color: #dd7729;
-  color: white;
+  border: none;
+  margin: 20px 0px 0px 0px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
 }
 
 .cancel-button {
@@ -81,12 +76,17 @@ select {
   color: #333;
 }
 
-.submit-button:hover {
-  background-color: #c56621;
-}
-
 .cancel-button:hover {
   background-color: #e0e0e0;
+}
+
+.submit-button {
+  background-color: #ff9966;
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: #ef7d43;
 }
 
 @media (max-width: 480px) {

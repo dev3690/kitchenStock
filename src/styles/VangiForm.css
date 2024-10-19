@@ -97,47 +97,38 @@ input, select, textarea {
 
 .button-group {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 10px;
+  margin-top: 20px;
 }
 
-.submit-button, .cancel-button {
+.cancel-button,
+.submit-button {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
-}
-
-.submit-button {
-  background-color: #e67e22;
-  color: rgb(120, 66, 66);
+  transition: background-color 0.3s;
 }
 
 .cancel-button {
-  background-color: #95a5a6;
-  color: rgb(255, 255, 255);
-}
-
-.submit-button:hover {
-  background-color: #d35400;
+  background-color: #f0f0f0;
+  color: #333;
 }
 
 .cancel-button:hover {
-  background-color: #7f8c8d;
+  background-color: #e0e0e0;
 }
 
-@media (max-width: 600px) {
-  .vangi-form-container {
-    width: 95%;
-  }
-
-  .form-row {
-    flex-direction: column;
-    gap: 15px;
-  }
+.submit-button {
+  background-color: #ff9966;
+  color: white;
 }
 
+.submit-button:hover {
+  background-color: #ef7d43;
+}
 
 .item-fields {
   border: 1px solid #ddd;

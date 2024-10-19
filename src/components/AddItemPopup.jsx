@@ -162,7 +162,7 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
           </div>
           <div className="button-group">
             <button type="submit" className="submit-button">
-              {currentLanguage === 'eng' ? 'Submit' : 'સબમિટ કરો'}
+              {currentLanguage === 'eng' ? 'Add' : 'ઉમેરો'}
             </button>
             <button type="button" className="cancel-button" onClick={onClose}>
               {currentLanguage === 'eng' ? 'Cancel' : 'રદ કરો'}
