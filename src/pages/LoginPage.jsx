@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
 function LoginPage({ language }) {
-    const { isAuthenticated } = useContext(AuthContext);
+    const { isAuthenticated, login } = useContext(AuthContext);
 
     if (isAuthenticated) {
         return <Navigate to="/dashboard" replace />;
@@ -18,7 +18,7 @@ function LoginPage({ language }) {
                 <img src="/assets/annakoot_photo.jpg" alt="Decorative temple" />
             </div>
             <div className="login-form-container">
-                <LoginForm language={language} />
+                <LoginForm language={language} onLogin={(token, role) => login(token, role)} />
             </div>
         </div>  
     );

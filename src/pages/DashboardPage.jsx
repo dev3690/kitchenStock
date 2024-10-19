@@ -8,7 +8,7 @@ import AddItemPopup from '../components/AddItemPopup';
 function DashboardPage({ changeLanguage, language }) {
   const navigate = useNavigate();
   const [cardData, setCardData] = useState([]);
-  const { logout } = useContext(AuthContext);
+  const { logout, userRole } = useContext(AuthContext);
   const [currentLanguage, setCurrentLanguage] = useState('eng');
   const [isAddItemPopupOpen, setIsAddItemPopupOpen] = useState(false);
   const [selectedPradeshId, setSelectedPradeshId] = useState(null);
@@ -99,12 +99,14 @@ function DashboardPage({ changeLanguage, language }) {
             onClick={() => handleCardClick(pradesh.pId)}
           >
             <div className="card-header">
-              <button className="assign-button" onClick={(e) => {
-                e.stopPropagation();
-                handleOpenAddItemPopup(pradesh.pId, currentLanguage === 'eng' ? pradesh.lastNameEng : pradesh.lastNameGuj);
-              }}>
-                <img src="/assets/add.png" alt="Assign Items" className="icon" />
-              </button>
+              {userRole === true && (
+                <button className="assign-button" onClick={(e) => {
+                  e.stopPropagation();
+                  handleOpenAddItemPopup(pradesh.pId, currentLanguage === 'eng' ? pradesh.lastNameEng : pradesh.lastNameGuj);
+                }}>
+                  <img src="/assets/add.png" alt="Assign Items" className="icon" />
+                </button>
+              )}
             </div>
             <h2 className="card-title">
               {currentLanguage === 'eng' ? (pradesh.lastNameEng || "Pradesh Name") : (pradesh.lastNameGuj || "પ્રદેશ નામ")}
@@ -117,7 +119,7 @@ function DashboardPage({ changeLanguage, language }) {
                   d="M18 2.0845
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831"
-                /> 
+                />
                 <path
                   className="circle"
                   strokeDasharray={`${Math.min(pradesh.receivedPercentage, 100)}, 100`}
@@ -135,12 +137,6 @@ function DashboardPage({ changeLanguage, language }) {
                 </text>
               </svg>
             </div>
-    
-            <p className="card-details">
-              {currentLanguage === 'eng' ? 'Contact Person: ' : 'સંપર્ક વ્યક્તિ: '}{pradesh.contPerson || "N/A"}
-              <br />
-              {currentLanguage === 'eng' ? 'Contact Number: ' : 'સંપર્ક નંબર: '}{pradesh.contPersonNo || "N/A"}
-            </p>
           </div>
         ))}
       </div>
@@ -151,18 +147,14 @@ function DashboardPage({ changeLanguage, language }) {
           className="download-icon"
         />
       </button>
-
-
       <AddItemPopup
         isOpen={isAddItemPopupOpen}
         onClose={() => setIsAddItemPopupOpen(false)}
         onSubmit={(newItem) => {
           console.log('New item assigned:', newItem);
-          // Update the cardData state with the new information
           setCardData(prevCardData => {
             return prevCardData.map(card => {
               if (card.pId === selectedPradeshId) {
-                // Update the specific card with new data
                 return {
                   ...card,
                   ...newItem.updatedData
@@ -172,7 +164,6 @@ function DashboardPage({ changeLanguage, language }) {
             });
           });
           setIsAddItemPopupOpen(false);
-          // Refresh the dashboard data
           refreshDashboardData();
         }}
         pradeshId={selectedPradeshId}

@@ -97,8 +97,9 @@ function DetailPradeshPage() {
             <tr>
               <th>{currentLanguage === 'eng' ? 'Sr No' : 'ક્રમ સંખ્યા'}</th>
               <th>{currentLanguage === 'eng' ? 'Item List' : 'વસ્તુ સૂચિ'}</th>
-              <th>{currentLanguage === 'eng' ? 'Received/Assigned' : 'પ્રાપ્ત/સોંપણી'}</th>
-              <th>{currentLanguage === 'eng' ? 'Unit ' : 'એકમ'}</th>
+              <th>{currentLanguage === 'eng' ? 'Received' : 'પ્રાપ્ત'}</th>
+              <th>{currentLanguage === 'eng' ? 'Assigned' : 'સોંપણી'}</th>
+              <th>{currentLanguage === 'eng' ? 'Unit' : 'એકમ'}</th>
             </tr>
           </thead>
           <tbody>
@@ -106,7 +107,8 @@ function DetailPradeshPage() {
               <tr key={`${item.itemId}-${index}`}>
                 <td>{index + 1}</td>
                 <td>{currentLanguage === 'eng' ? item.nameEng : item.nameGuj}</td>
-                <td>{`${item.totalReceived}/${item.totalAssigned}`}</td>
+                <td className="received-value">{item.totalReceived}</td>
+                <td className="assigned-value">{item.totalAssigned}</td>
                 <td>{item.unit || 'N/A'}</td>
               </tr>
             ))}

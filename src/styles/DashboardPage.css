@@ -127,7 +127,7 @@
 .circular-progress {
   width: 100px;
   height: 100px;
-  margin: 0 auto;
+  margin: 10px 10px 20px 10px;
 }
 
 .circular-chart {
@@ -267,3 +267,7 @@
     font-size: 0.3em;
   }
 }
+
+
+
+/* dashboard header name  font color : #ff9966*/

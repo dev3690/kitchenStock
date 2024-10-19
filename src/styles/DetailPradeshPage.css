@@ -17,7 +17,7 @@
 .detail-pradesh-header h1 {
   font-size: 34px;
   font-weight: bold;
-  color: #333;
+  color: #ff9966;
 }
 
 .header-icons {
@@ -85,6 +85,28 @@ tr:last-child td {
   border-bottom: none;
 }
 
+.received-value {
+  color: green;
+  font-weight: bold;
+}
+
+.assigned-value {
+  color: red;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #dfd9d9;
+}
+
+tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+tr:hover {
+  background-color: #e6e6e6;
+}
+
 @media (max-width: 768px) {
     .detail-pradesh-container {
         margin-left: 40px;    
@@ -124,7 +146,8 @@ tr:last-child td {
 
 @media (max-width: 480px) {
   .detail-pradesh-container {
-    padding: 10px;
+    padding-left: 50px;
+    padding-right: 10px;
     
   }
 

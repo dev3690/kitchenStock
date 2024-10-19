@@ -7,7 +7,7 @@ function VangiForm({ onClose, onSubmit, currentLanguage, pradeshId, pradeshName,
     pId: pradeshId,
     dePerson: '',
     dePerCont: '',
-    reference: '',
+    reference: ' ',
     remark: ''
   });
 
@@ -93,11 +93,15 @@ function VangiForm({ onClose, onSubmit, currentLanguage, pradeshId, pradeshName,
                     required
                   >
                     <option value="">{currentLanguage === 'eng' ? 'Select Item' : 'વસ્તુ પસંદ કરો'}</option>
-                    {itemIds.map((itemId) => (
-                      <option key={itemId} value={itemId}>
-                        {currentLanguage === 'eng' ? itemsList.find(i => i.itemId === itemId)?.nameEng : itemsList.find(i => i.itemId === itemId)?.nameGuj}
-                      </option>
-                    ))}
+                    {itemIds
+                      .filter(itemId => itemsList.find(i => i.itemId === itemId && !i.isOther))
+                      .map((itemId) => (
+                        <option key={itemId} value={itemId}>
+                          {currentLanguage === 'eng' 
+                            ? itemsList.find(i => i.itemId === itemId)?.nameEng 
+                            : itemsList.find(i => i.itemId === itemId)?.nameGuj}
+                        </option>
+                      ))}
                     <option value="other">{currentLanguage === 'eng' ? 'Other' : 'અન્ય'}</option>
                   </select>
                 </div>
@@ -174,7 +178,7 @@ function VangiForm({ onClose, onSubmit, currentLanguage, pradeshId, pradeshName,
                   type="text"
                   id="reference"
                   name="reference"
-                  value={formData.reference}
+                  value={formData.reference || ' '}
                   onChange={handleChange}
                 />
               </div>

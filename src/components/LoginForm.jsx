@@ -13,8 +13,8 @@ function LoginForm({ language }) {
         e.preventDefault();
         try {
             const response = await callAxiosApi(loginApi, { mobile, password });
-            const token = response.data.token; // Adjust based on your API response
-            login(token);
+            const { token, isMaster } = response.data.data;
+            login(token, isMaster);
             navigate('/dashboard');
         } catch (error) {
             console.error('Login failed:', error);
