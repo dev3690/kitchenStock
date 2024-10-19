@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/DetailPradeshPage.css';
 import addIcon from '../assets/add.png';
+import receivedIcon from '../assets/receiver.png';
 import infoIcon from '../assets/information-button.png';
 import languageIcon from '../assets/languages.png';
 import { callAxiosApi, getPradeshItemsDetails } from '../api_utils';
@@ -76,7 +77,7 @@ function DetailPradeshPage() {
         <h1>{currentLanguage === 'eng' ? pradeshData.lastNameEng : pradeshData.lastNameGuj}</h1>
         <div className="header-icons">
           <button className="icon-button" onClick={() => setIsPopupOpen(true)}>
-            <img src={addIcon} alt="Plus" className="icon" height={20} width={20} />
+            <img src={receivedIcon} alt="Plus" className="icon" height={20} width={20} />
           </button>
           <button className="icon-button" onClick={() => setIsInfoPopupOpen(true)}>
             <img src={infoIcon} alt="Info" className="icon" />
@@ -120,7 +121,7 @@ function DetailPradeshPage() {
               onSubmit={handleAddItem}
               currentLanguage={currentLanguage}
               pradeshId={id}
-              pradeshName={pradeshData.newNameEng}
+              pradeshName={pradeshData.lastNameEng}
               itemIds={pradeshData.items.map(item => item.itemId)} // Pass only the item IDs
               itemsList={pradeshData.items} // Pass the items list to VangiForm
             />

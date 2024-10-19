@@ -32,6 +32,7 @@ function VangiForm({ onClose, onSubmit, currentLanguage, pradeshId, pradeshName,
           itemId: item.isOther ? null : Number(item.itemId),
           itemName: item.isOther ? item.itemName : null,
           qty: Number(item.qty),
+          unit: item.isOther ? item.unit : null,
           isOther: item.isOther
         }))
       });
@@ -56,7 +57,7 @@ function VangiForm({ onClose, onSubmit, currentLanguage, pradeshId, pradeshName,
       updatedItems[index].unit = selectedItem ? selectedItem.unit : '';
       updatedItems[index].isOther = value === 'other';
       updatedItems[index].itemName = '';
-      // Clear the unit when switching to 'Other'
+      // Don't clear the unit when switching to 'Other'
       if (value === 'other') {
         updatedItems[index].unit = '';
       }

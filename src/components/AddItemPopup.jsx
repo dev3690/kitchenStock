@@ -4,11 +4,23 @@ import { callAxiosApi, getTableData, assignItemToPradesh } from '../api_utils';
 
 function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, currentLanguage }) {
   const [itemId, setItemId] = useState('');
+  const [itemName, setItemName] = useState('');
   const [unit, setUnit] = useState('');
   const [quantity, setQuantity] = useState('');
   const [itemData, setItemData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isOther, setIsOther] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setItemId('');
+      setItemName('');
+      setUnit('');
+      setQuantity('');
+      setIsOther(false);
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,11 +41,20 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
   const handleItemChange = (e) => {
     const selectedItemId = e.target.value;
     setItemId(selectedItemId);
-    const selectedItem = itemData.find(item => item.itemId === parseInt(selectedItemId));
-    if (selectedItem) {
-      setUnit(selectedItem.unit);
-    } else {
+    if (selectedItemId === 'other') {
+      setIsOther(true);
       setUnit('');
+      setItemName('');
+    } else {
+      setIsOther(false);
+      const selectedItem = itemData.find(item => item.itemId === parseInt(selectedItemId));
+      if (selectedItem) {
+        setUnit(selectedItem.unit);
+        setItemName(selectedItem.nameEng);
+      } else {
+        setUnit('');
+        setItemName('');
+      }
     }
   };
 
@@ -42,17 +63,17 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
     try {
       const response = await callAxiosApi(assignItemToPradesh, {
         pId: parseInt(pradeshId),
-        itemId: parseInt(itemId),
-        qty: quantity
-      });
-      console.log('Item assigned successfully:', response.data);
-      const selectedItem = itemData.find(item => item.itemId === parseInt(itemId));
-      onSubmit({
-        itemId: parseInt(itemId),
-        nameEng: selectedItem ? selectedItem.nameEng : 'Unknown Item',
+        itemId: isOther ? null : parseInt(itemId),
+        itemName: isOther ? itemName : null,
         qty: quantity,
         unit: unit,
-        updatedData: response.data // Include the updated data from the response
+        isOther: isOther
+      });
+      console.log('Item assigned successfully:', response.data);
+      onSubmit({
+        itemId: isOther ? null : parseInt(itemId),
+        nameEng: isOther ? itemName : itemData.find(item => item.itemId === parseInt(itemId))?.nameEng,
+        updatedData: response.data
       });
       onClose();
     } catch (error) {
@@ -103,16 +124,30 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
                   {item.nameEng}
                 </option>
               ))}
+              {/* <option value="other">Other</option> */}
             </select>
           </div>
+          {isOther && (
+            <div className="form-group">
+              <label htmlFor="itemName">Custom Item Name :</label>
+              <input
+                type="text"
+                id="itemName"
+                value={itemName}
+                onChange={(e) => setItemName(e.target.value)}
+                required
+              />
+            </div>
+          )}
           <div className="form-group">
             <label htmlFor="unit">Unit :</label>
             <input
               type="text"
               id="unit"
               value={unit}
-              readOnly
-              className="readonly-input"
+              onChange={(e) => setUnit(e.target.value)}
+              readOnly={!isOther}
+              className={isOther ? '' : 'readonly-input'}
             />
           </div>
           <div className="form-group">
@@ -126,8 +161,12 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
             />
           </div>
           <div className="button-group">
-            <button type="submit" className="submit-button">Submit</button>
-            <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>
+            <button type="submit" className="submit-button">
+              {currentLanguage === 'eng' ? 'Submit' : 'સબમિટ કરો'}
+            </button>
+            <button type="button" className="cancel-button" onClick={onClose}>
+              {currentLanguage === 'eng' ? 'Cancel' : 'રદ કરો'}
+            </button>
           </div>
         </form>
       </div>

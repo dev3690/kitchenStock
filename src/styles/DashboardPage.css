@@ -131,8 +131,10 @@
 }
 
 .circular-chart {
-  width: 100%;
-  height: 100%;
+  display: block;
+  margin: 10px auto;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .circle-bg {
@@ -143,23 +145,24 @@
 
 .circle {
   fill: none;
-  stroke: #dd7729;
   stroke-width: 2.8;
   stroke-linecap: round;
-  animation: progress 1s ease-out forwards;
+  stroke: #dd7729;
 }
 
-@keyframes progress {
-  0% {
-    stroke-dasharray: 0 100;
-  }
-}
-
-.percentage {
-  fill: #666;
-  font-family: sans-serif;
-  font-size: 0.5em;
+.percentage-text {
+  fill: #333;
+  font-family: Arial, sans-serif;
   text-anchor: middle;
+}
+
+.percentage-value {
+  font-size: 0.5em;
+  font-weight: bold;
+}
+
+.quantity-text {
+  font-size: 0.35em;
 }
 
 .card-details {
@@ -248,4 +251,19 @@
 
 .card-actions .icon-button:hover {
   background-color: #e0e0e0;
+}
+
+@media (max-width: 768px) {
+  .circular-progress {
+    width: 80px;
+    height: 80px;
+  }
+
+  .percentage-value {
+    font-size: 0.4em;
+  }
+
+  .quantity-text {
+    font-size: 0.3em;
+  }
 }

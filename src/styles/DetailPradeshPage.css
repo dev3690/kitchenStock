@@ -43,8 +43,8 @@
 }
 
 .icon {
-  width: 24px;
-  height: 24px;
+  width: 38px;
+  height: 38px;
 }
 
 .pradesh-info {
@@ -107,13 +107,13 @@ tr:last-child td {
   }
 
   .icon-button {
-    width: 32px;
-    height: 32px;
+    width: 48px;
+    height: 48px;
   }
 
   .icon {
-    width: 28px;
-    height: 28px;
+    width: 48px;
+    height: 48px;
   }
   table {
     width: 100%;

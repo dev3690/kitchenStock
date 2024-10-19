@@ -117,19 +117,25 @@ function DashboardPage({ changeLanguage, language }) {
                   d="M18 2.0845
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831"
-                />
+                /> 
                 <path
                   className="circle"
-                  strokeDasharray={`${(pradesh.totalReceived / pradesh.totalAssigned) * 100 || 0}, 100`}
+                  strokeDasharray={`${Math.min(pradesh.receivedPercentage, 100)}, 100`}
                   d="M18 2.0845
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
-                <text x="18" y="20.35" className="percentage">
-                  {pradesh.totalReceived}/{pradesh.totalAssigned}
+                <text x="18" y="18" className="percentage-text">
+                  <tspan x="18" dy="-0.2em" className="percentage-value">
+                    {Math.round(pradesh.receivedPercentage)}%
+                  </tspan>
+                  <tspan x="18" dy="1.6em" className="quantity-text">
+                    {pradesh.totalReceivedQty}/{pradesh.totalAssignedQty}
+                  </tspan>
                 </text>
               </svg>
             </div>
+    
             <p className="card-details">
               {currentLanguage === 'eng' ? 'Contact Person: ' : 'સંપર્ક વ્યક્તિ: '}{pradesh.contPerson || "N/A"}
               <br />
