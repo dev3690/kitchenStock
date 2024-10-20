@@ -48,7 +48,7 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   padding: 20px;
-  /* background-color: #FFFFFF66; */
+  /* background-color: #FFFFFF */
 }
 
 @media (max-width: 1200px) {
@@ -93,7 +93,7 @@
 }
 
 .assign-button {
-  background: none;
+  background: #F0D1AF;
   border: none;
   cursor: pointer;
   padding: 5px;
@@ -109,7 +109,7 @@
 
 .assign-button:hover {
   background-color: #dd7729;
-  /* transition: background-color 0.3s ease; */
+  transition: background-color 0.3s ease;
 }
 
 .assign-button .icon {
@@ -119,9 +119,9 @@
   
 }
 
-/* .assign-button:hover .icon {
-  filter: brightness(0) invert(1);
-} */
+.assign-button:hover .icon {
+  background-color: #dd7729;
+}
 
 .card-title {
   margin: 30px 0px 0px 0px;

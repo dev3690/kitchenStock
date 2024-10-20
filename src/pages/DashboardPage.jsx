@@ -102,7 +102,7 @@ function DashboardPage({ changeLanguage, language }) {
             <div className="card-header">
               {userRole === true && (
                 <button className="assign-button" onClick={(e) => {
-                  e.stopPropagation();
+                  e.stopPropagation();    
                   handleOpenAddItemPopup(pradesh.pId, currentLanguage === 'eng' ? pradesh.lastNameEng : pradesh.lastNameGuj);
                 }}>
                   <img src="/assets/add.png" alt="Assign Items" className="icon" />

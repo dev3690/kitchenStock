@@ -8,6 +8,7 @@ import languageIcon from '../assets/languages.png';
 import { callAxiosApi, getPradeshItemsDetails } from '../api_utils';
 import InfoPopup from '../components/InfoPopup';
 import VangiForm from './VangiForm';
+import '../styles/VangiForm.css';
 
 
 function DetailPradeshPage() {

@@ -106,6 +106,7 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
               id="pradeshName"
               value={pradeshName}
               readOnly
+              style={{ backgroundColor: '#F0D1AF', border: '1px solid #ff9966', borderRadius: '10px' }}
               className="readonly-input"
             />
           </div>
@@ -113,6 +114,7 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
             <label htmlFor="itemId">Item Name :</label>
             <select
               id="itemId"
+              style={{ borderRadius: '10px' }}
               value={itemId}
               onChange={handleItemChange}
               required
@@ -133,6 +135,7 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
               <input
                 type="text"
                 id="itemName"
+                style={{ borderRadius: '10px' }}
                 value={itemName}
                 onChange={(e) => setItemName(e.target.value)}
                 required
@@ -145,6 +148,7 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
               type="text"
               id="unit"
               value={unit}
+              style={{ backgroundColor: '#F0D1AF', border: '1px solid #ff9966', borderRadius: '10px' }}
               onChange={(e) => setUnit(e.target.value)}
               readOnly={!isOther}
               className={isOther ? '' : 'readonly-input'}
@@ -156,15 +160,16 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
               type="number"
               id="quantity"
               value={quantity}
+              style={{ borderRadius: '10px' }}
               onChange={(e) => setQuantity(e.target.value)}
               required
             />
           </div>
           <div className="button-group">
-            <button type="submit" className="submit-button">
+            <button type="submit" className="submit-button" style={{ backgroundColor: '#BA5600', color: 'white', borderRadius: '40px' }}>
               {currentLanguage === 'eng' ? 'Add' : 'ઉમેરો'}
             </button>
-            <button type="button" className="cancel-button" onClick={onClose}>
+            <button type="button" className="cancel-button" onClick={onClose} style={{ backgroundColor: 'white', color: '#BA5600  ', borderRadius: '40px' }}>
               {currentLanguage === 'eng' ? 'Cancel' : 'રદ કરો'}
             </button>
           </div>
