@@ -74,7 +74,7 @@ function DetailPradeshPage() {
 
   return (
     <div className="detail-pradesh-container">
-      <div className="detail-pradesh-header">
+      <div className="detail-pradesh-header" style={{ margin: '1px', height: '60px' }}>
         <h1>{currentLanguage === 'eng' ? pradeshData.lastNameEng : pradeshData.lastNameGuj}</h1>
         <div className="header-icons">
           <button className="icon-button" onClick={() => setIsPopupOpen(true)}>

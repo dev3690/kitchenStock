@@ -83,11 +83,12 @@ function DashboardPage({ changeLanguage, language }) {
             <img
               src="/assets/languages.png"
               alt="Change Language"
+              style={{ backgroundColor: '#F0D1AF' }}
               className="icon"
             />
           </button>
           <button className="icon-button" onClick={logout}>
-            <img src="/assets/logout.png" alt="Logout" className="icon" />
+            <img src="/assets/logout.png" alt="Logout" className="icon" style={{ backgroundColor: '#F0D1AF' }} />
           </button>
         </div>
       </div>
@@ -105,7 +106,7 @@ function DashboardPage({ changeLanguage, language }) {
                   e.stopPropagation();    
                   handleOpenAddItemPopup(pradesh.pId, currentLanguage === 'eng' ? pradesh.lastNameEng : pradesh.lastNameGuj);
                 }}>
-                  <img src="/assets/add.png" alt="Assign Items" className="icon" />
+                  <img src="public\assets\add1.png" alt="Assign Items" className="icon" />
                 </button>
               )}
             </div>

@@ -106,7 +106,7 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
               id="pradeshName"
               value={pradeshName}
               readOnly
-              style={{ backgroundColor: '#F0D1AF', border: '1px solid #ff9966', borderRadius: '10px' }}
+              style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)', border: '1px solid #ff9966', borderRadius: '10px' }}
               className="readonly-input"
             />
           </div>
@@ -114,7 +114,7 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
             <label htmlFor="itemId">Item Name :</label>
             <select
               id="itemId"
-              style={{ borderRadius: '10px' }}
+              style={{ borderRadius: '10px', backgroundColor: 'rgba(255, 255, 255, 0.4)' }}
               value={itemId}
               onChange={handleItemChange}
               required
@@ -148,7 +148,7 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
               type="text"
               id="unit"
               value={unit}
-              style={{ backgroundColor: '#F0D1AF', border: '1px solid #ff9966', borderRadius: '10px' }}
+              style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)', border: '1px solid #ff9966', borderRadius: '10px' }}
               onChange={(e) => setUnit(e.target.value)}
               readOnly={!isOther}
               className={isOther ? '' : 'readonly-input'}

@@ -7,10 +7,11 @@
 
 .dashboard-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between  ;
+  flex-direction: row;
   align-items: center;
-  margin-bottom: 20px;
-  padding: 10px 20px;
+  margin-bottom: 2px;
+  padding: 1px 20px;
   position: sticky;
   top: 0;
   /* background-color: #fff1e6; */
@@ -24,10 +25,11 @@
 }
 
 .icon-button {
-  background: none;
-  border: none;
+  background-color: #F0D1AF;
+  border: #F0D1AF;
   cursor: pointer;
-  padding: 5px;
+  border-radius: 50%;
+  /* padding: 5px; */
   transition: transform 0.2s;
   display: flex;
   align-items: center;
@@ -119,7 +121,7 @@
   
 }
 
-.assign-button:hover .icon {
+.assign-button:hover {
   background-color: #dd7729;
 }
 
@@ -183,10 +185,11 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
+    /* height: 40px; */
   }
 
   .dashboard-header h1 {
-    font-size: 1.7  rem;
+    font-size: 2.7rem;
     margin: 0px 10px;
   }
 
@@ -276,14 +279,12 @@
 
 
 
-/* dashboard header name  font color : #ff9966*/
 
 .dashboard-header-name {
   font-family: 'Crimson Text', serif;
-  /* You can adjust the following properties as needed */
   font-weight: 700;
   font-size: 3.5rem;
-  color: #F46828;
+  color: #F46828; 
 }
 
 .card-header {
@@ -293,7 +294,7 @@
 
 .card-title {
   font-family: 'Crimson Text', serif;
-  font-weight: 700; /* This makes it bold */
+  font-weight: 700;
   /* position: absolute; */
   top: 10px;
   left: 10px;

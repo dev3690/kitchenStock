@@ -27,7 +27,7 @@ function LoginForm({ language }) {
             <div className="login-form-container">
                 <div className="login-icon">
                     <h1>Login Page </h1>
-                    <img src="/assets/laptop_image.jpg" alt="Laptop Image" height={200} width={200} />
+                    <img src="public\assets\laptop_image1.png" style={{ alignItems: 'center' }} alt="Laptop Image" height={200} width={200} />
                 </div>
                 <form onSubmit={handleSubmit} className="login-form">
                     <div className="input-group">
@@ -35,6 +35,7 @@ function LoginForm({ language }) {
                             type="text"
                             placeholder="Mobile"
                             value={mobile}
+                            style={{ fontSize: '1.5rem' }}
                             onChange={(e) => setUsername(e.target.value)}
                             required
                         />
@@ -47,6 +48,7 @@ function LoginForm({ language }) {
                             type="password"
                             placeholder="Password"
                             value={password}
+                            style={{ fontSize: '1.5rem' }}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
@@ -54,7 +56,7 @@ function LoginForm({ language }) {
                             <img src="/assets/lock.png" alt="Lock Icon" height={20} width={20} />
                         </span>
                     </div>
-                    <button type="submit">Login</button>
+                    <button type="submit" style={{ fontSize: '1.5rem' }}>Login</button>
                 </form>
             </div>
         </div>

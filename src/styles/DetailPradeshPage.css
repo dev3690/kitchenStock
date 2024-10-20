@@ -12,11 +12,11 @@
   /* justify-content: stretch; */
   align-items: center;
   font-family: 'Crimson Text', serif;
-  margin-bottom: 20px;
+  margin-bottom: 2px;
 }
 
 .detail-pradesh-header h1 {
-  font-size: 34px;
+  font-size: 64px;
   font-weight: bold;
   color: #F46828;
 }
@@ -27,7 +27,7 @@
 }
 
 .icon-button {
-  background: #f0b06d;
+  background: #F0D1AF;
   border: none;
   font-size: 24px;
   cursor: pointer;
@@ -45,7 +45,7 @@
 
 .icon {
   width: 38px;
-border-radius: 30%;
+  border-radius: 30%;
   background: #f0b06d;
   height: 38px;
 }
@@ -56,7 +56,7 @@ border-radius: 30%;
   font-family: 'Crimson Text', serif;
   color: #666;
   margin: 10px;
-  
+
 }
 
 .table-container {
@@ -74,7 +74,8 @@ table {
   font-size: large;
 }
 
-th, td {
+th,
+td {
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid #eee;
@@ -99,7 +100,9 @@ tr:last-child td {
   color: red;
   font-weight: bold;
 }
-th:nth-child(odd), th:nth-child(even) {
+
+th:nth-child(odd),
+th:nth-child(even) {
   background-color: #f0b06d;
 }
 
@@ -116,9 +119,10 @@ tr:hover {
 }
 
 @media (max-width: 768px) {
-    .detail-pradesh-container {
-        margin-left: 40px;    
-    }
+  .detail-pradesh-container {
+    margin-left: 40px;
+  }
+
   .detail-pradesh-header {
     display: flex;
     /* justify-content: space-between; */
@@ -145,6 +149,7 @@ tr:hover {
     width: 48px;
     height: 48px;
   }
+
   table {
     width: 100%;
     max-width: 140%;
@@ -156,25 +161,29 @@ tr:hover {
   .detail-pradesh-container {
     padding-left: 50px;
     padding-right: 10px;
-    
+
   }
 
   .detail-pradesh-header h1 {
-    font-size: 26px;
+    font-size: 46px;
+    margin: 0px 10px;
+    /* margin-right: 30%; */
+    flex-direction: space-evenly;
     padding: 10px;
   }
 
   .icon-button {
-    width: 68px;
-    height: 38px;
-    background: #f0b06d;
+    width: 48px;
+    height: 48px;
+    background: #F0D1AF;
 
   }
 
   .icon {
-    width: 38px;
-    height: 38px;
+    width: 48px;
+    height: 48px;
   }
+
   table {
     width: 100%;
     max-width: 140%;
@@ -182,5 +191,3 @@ tr:hover {
     border-collapse: collapse;
   }
 }
-
-
