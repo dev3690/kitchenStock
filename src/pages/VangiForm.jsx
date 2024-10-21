@@ -45,7 +45,6 @@ function VangiForm({ onClose, onSubmit, currentLanguage, pradeshId, pradeshName,
       onClose();
     } catch (error) {
       console.error('Error receiving items:', error);
-      // You might want to show an error message to the user here
     }
   };
 
@@ -57,9 +56,8 @@ function VangiForm({ onClose, onSubmit, currentLanguage, pradeshId, pradeshName,
       updatedItems[index].unit = selectedItem ? selectedItem.unit : '';
       updatedItems[index].isOther = value === 'other';
       updatedItems[index].itemName = '';
-      // Don't clear the unit when switching to 'Other'
       if (value === 'other') {
-        updatedItems[index].unit = '';
+        updatedItems[index].unit = ''; 
       }
     }
     setItems(updatedItems);
@@ -135,6 +133,7 @@ function VangiForm({ onClose, onSubmit, currentLanguage, pradeshId, pradeshName,
                     onChange={(e) => handleItemChange(index, 'unit', e.target.value)}
                     readOnly={!item.isOther}
                   />
+                  
                 </div>
               </div>
             ))}

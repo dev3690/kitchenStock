@@ -7,21 +7,30 @@
 
 .dashboard-header {
   display: flex;
-  justify-content: space-between  ;
-  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 2px;
-  padding: 1px 20px;
-  position: sticky;
-  top: 0;
-  /* background-color: #fff1e6; */
-  background-color: #F0D1AF;
-  z-index: 1000;
+  padding: 10px 20px;
+}
+
+.dashboard-header-name {
+  flex-grow: 1;
+  text-align: center;
+  margin: 0;
 }
 
 .header-icons {
   display: flex;
-  gap: 10px;
+  align-items: center;
+}
+
+.left-icons {
+  flex-basis: 33.33%;
+  justify-content: flex-start;
+}
+
+.right-icons {
+  flex-basis: 33.33%;
+  justify-content: flex-end;
 }
 
 .icon-button {
@@ -182,15 +191,19 @@
 @media (max-width: 768px) {
   .dashboard-header {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     padding: 10px;
-    /* height: 40px; */
+  }
+
+  .dashboard-header-name {
+    text-align: left;
+    margin-right: auto;
   }
 
   .dashboard-header h1 {
     font-size: 2.7rem;
-    margin: 0px 10px;
+    margin: 0px -10%;
   }
 
   .header-icons {
@@ -279,13 +292,6 @@
 
 
 
-
-.dashboard-header-name {
-  font-family: 'Crimson Text', serif;
-  font-weight: 700;
-  font-size: 3.5rem;
-  color: #F46828; 
-}
 
 .card-header {
   top: 0px;

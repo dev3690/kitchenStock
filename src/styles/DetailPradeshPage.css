@@ -79,6 +79,9 @@ td {
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid #eee;
+  text-align: center;
+  vertical-align: middle;
+
 }
 
 th {
@@ -89,6 +92,10 @@ th {
 
 tr:last-child td {
   border-bottom: none;
+}
+
+.total-row{
+  font-weight: bolder;
 }
 
 .received-value {
@@ -120,6 +127,7 @@ tr:hover {
 
 @media (max-width: 768px) {
   .detail-pradesh-container {
+    margin: 10px;
     margin-left: 40px;
   }
 
@@ -172,6 +180,11 @@ tr:hover {
     padding: 10px;
   }
 
+  .pradesh-info{
+    margin: 50px 20px 0px 20px;
+
+  }
+
   .icon-button {
     width: 48px;
     height: 48px;
@@ -191,3 +204,6 @@ tr:hover {
     border-collapse: collapse;
   }
 }
+
+
+

@@ -27,7 +27,7 @@ function LoginForm({ language }) {
             <div className="login-form-container">
                 <div className="login-icon">
                     <h1>Login Page </h1>
-                    <img src="public\assets\laptop_image1.png" style={{ alignItems: 'center' }} alt="Laptop Image" height={200} width={200} />
+                    <img src="/assets/laptop_image1.png" style={{ alignItems: 'center' }} alt="Laptop Image" height={200} width={200} />
                 </div>
                 <form onSubmit={handleSubmit} className="login-form">
                     <div className="input-group">

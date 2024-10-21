@@ -11,11 +11,11 @@ function InfoPopup({ isOpen, onClose, pradeshData, currentLanguage }) {
   };
 
   const detailsToShow = [
-    { label: { eng: 'Old Name', guj: 'જૂનું નામ' }, value: { eng: 'lastNameEng', guj: 'lastNameGuj' } },
+    // { label: { eng: 'Old Name', guj: 'જૂનું નામ' }, value: { eng: 'lastNameEng', guj: 'lastNameGuj' } },
     { label: { eng: 'New Name', guj: 'નવું નામ' }, value: { eng: 'newNameEng', guj: 'newNameGuj' } },
     { label: { eng: 'Sant', guj: 'સંત' }, value: { eng: 'pSantEng', guj: 'pSantGuj' } },
-    { label: { eng: 'Contact Person', guj: 'સંપર્ક વ્યક્તિ' }, value: { eng: 'contPerson', guj: 'contPerson' } },
-    { label: { eng: 'Contact Number', guj: 'સંપર્ક નંબર' }, value: { eng: 'contPersonNo', guj: 'contPersonNo' } },
+    // { label: { eng: 'Contact Person', guj: 'સંપર્ક વ્યક્તિ' }, value: { eng: 'contPerson', guj: 'contPerson' } },
+    // { label: { eng: 'Contact Number', guj: 'સંપર્ક નંબર' }, value: { eng: 'contPersonNo', guj: 'contPersonNo' } },
     { label: { eng: 'Total Assigned', guj: 'કુલ સોંપાયેલ' }, value: { eng: 'totalAssigned', guj: 'totalAssigned' } },
     { label: { eng: 'Total Received', guj: 'કુલ પ્રાપ્ત' }, value: { eng: 'totalReceived', guj: 'totalReceived' } },
   ];
@@ -31,7 +31,7 @@ function InfoPopup({ isOpen, onClose, pradeshData, currentLanguage }) {
             <span className="info-value">{pradeshData[detail.value[currentLanguage]] || 'N/A'}</span>
           </div>
         ))}
-        <button className="cancel-button" onClick={onClose}>
+        <button className="cancel-button" style={{marginLeft: "25%"}} onClick={onClose}>
           {currentLanguage === 'eng' ? 'Close' : 'બંધ કરો'}
         </button>
       </div>

@@ -48,20 +48,20 @@ function DetailPradeshPage() {
         totalAssigned: newItem.qty,
         unit: newItem.unit
       };
-  
-      const updatedItems = prevData.items.map(item => 
-        item.itemId === formattedNewItem.itemId 
+
+      const updatedItems = prevData.items.map(item =>
+        item.itemId === formattedNewItem.itemId
           ? { ...item, totalAssigned: parseInt(item.totalAssigned) + parseInt(formattedNewItem.totalAssigned) }
           : item
       );
-  
+
       if (!updatedItems.some(item => item.itemId === formattedNewItem.itemId)) {
         updatedItems.push(formattedNewItem);
       }
-  
+
       return { ...prevData, items: updatedItems };
     });
-    fetchPradeshData(); // Refetch data after adding new item
+    fetchPradeshData(); 
   };
 
   if (isLoading) {
@@ -88,8 +88,8 @@ function DetailPradeshPage() {
           </button>
         </div>
       </div>
-      <div className="pradesh-info">
-        <p>{currentLanguage === 'eng' ? pradeshData.pSantEng : pradeshData.pSantGuj}</p>
+      <div className="pradesh-info" >
+        <p >{currentLanguage === 'eng' ? pradeshData.pSantEng : pradeshData.pSantGuj}</p>
         {/* <p>{currentLanguage === 'eng' ? 'Contact No : ' : 'સંપર્ક નંબર : '}{pradeshData.contPersonNo || 'N/A'}</p> */}
       </div>
       <div className="table-container">
@@ -113,7 +113,18 @@ function DetailPradeshPage() {
                 <td>{item.unit || 'N/A'}</td>
               </tr>
             ))}
+            <tr className="total-row">
+              <td colSpan="2" style={{paddingRight: "110px"}} >{currentLanguage === 'eng' ? 'Total' : 'કુલ'}</td>
+              <td className="total-received">
+                {pradeshData.items.reduce((sum, item) => sum + parseInt(item.totalReceived), 0)}
+              </td>
+              <td className="total-assigned">
+                {pradeshData.items.reduce((sum, item) => sum + parseInt(item.totalAssigned), 0)}
+              </td>
+              <td></td>
+            </tr>
           </tbody>
+
         </table>
       </div>
       {isPopupOpen && (
@@ -125,8 +136,8 @@ function DetailPradeshPage() {
               currentLanguage={currentLanguage}
               pradeshId={id}
               pradeshName={pradeshData.lastNameEng}
-              itemIds={pradeshData.items.map(item => item.itemId)} // Pass only the item IDs
-              itemsList={pradeshData.items} // Pass the items list to VangiForm
+              itemIds={pradeshData.items.map(item => item.itemId)} 
+              itemsList={pradeshData.items} 
             />
           </div>
         </div>

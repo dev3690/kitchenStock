@@ -52,7 +52,6 @@ function DashboardPage({ changeLanguage, language }) {
       document.body.removeChild(a);
     } catch (error) {
       console.error("Error downloading Pradesh received items:", error);
-      // You may want to show an error message to the user here
     }
   };
 
@@ -77,8 +76,10 @@ function DashboardPage({ changeLanguage, language }) {
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
+        <div className="header-icons left-icons">
+        </div>
         <h1 className="dashboard-header-name">Annakut Mahotsav 2024</h1>
-        <div className="header-icons">
+        <div className="header-icons right-icons">
           <button className="icon-button" onClick={handleLanguageChange}>
             <img
               src="/assets/languages.png"
@@ -88,6 +89,7 @@ function DashboardPage({ changeLanguage, language }) {
             />
           </button>
           <button className="icon-button" onClick={logout}>
+            {/* <img src="/assets/logout.png" alt="Logout" className="icon" style={{ backgroundColor: '#F0D1AF' }} /> */}
             <img src="/assets/logout.png" alt="Logout" className="icon" style={{ backgroundColor: '#F0D1AF' }} />
           </button>
         </div>
@@ -106,7 +108,7 @@ function DashboardPage({ changeLanguage, language }) {
                   e.stopPropagation();    
                   handleOpenAddItemPopup(pradesh.pId, currentLanguage === 'eng' ? pradesh.lastNameEng : pradesh.lastNameGuj);
                 }}>
-                  <img src="public\assets\add1.png" alt="Assign Items" className="icon" />
+                  <img src="/assets/add1.png" alt="Assign Items" className="icon" />
                 </button>
               )}
             </div>

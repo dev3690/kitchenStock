@@ -78,7 +78,6 @@ function AddItemPopup({ isOpen, onClose, onSubmit, pradeshId, pradeshName, curre
       onClose();
     } catch (error) {
       console.error('Error assigning item:', error);
-      // You might want to show an error message to the user here
     }
   };
 

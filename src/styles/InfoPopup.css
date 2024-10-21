@@ -12,7 +12,7 @@
 }
 
 .info-popup-content {
-  background-color: #fff;
+  background-color: #F0D1AF;
   padding: 20px;
   margin: 20px;
   border-radius: 10px;
@@ -30,7 +30,7 @@
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: #666;
+  color: #c56621;
 }
 
 h2 {
