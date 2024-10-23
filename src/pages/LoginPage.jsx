@@ -2,15 +2,21 @@
 import { Navigate } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import '../styles/LoginPage.css';
-import { useContext } from 'react';
+import { useNavigate } from "react-router-dom";
+
+import { useContext, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
 function LoginPage({ language }) {
-    const { isAuthenticated, login } = useContext(AuthContext);
+    // const { isAuthenticated, login } = useContext(AuthContext);
+    const navigate = useNavigate();
 
-    if (isAuthenticated) {
-        return <Navigate to="/dashboard" replace />;
-    }
+    // useEffect(() => {
+    //     if () {
+    //         navigate("/dashboard");
+    //     }
+    //   }, []);
+    
 
     return (
         <div className="login-container">
@@ -18,7 +24,9 @@ function LoginPage({ language }) {
                 <img src="/assets/annakoot_photo.jpg" alt="Decorative temple" />
             </div>
             <div className="login-form-container">
-                <LoginForm language={language} onLogin={(token, role) => login(token, role)} />
+                <LoginForm language={language} 
+                //  onLogin={(token, role) => login(token, role)} 
+                 />
             </div>
         </div>  
     );

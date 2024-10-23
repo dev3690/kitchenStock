@@ -1,6 +1,5 @@
 body {
     font-family: 'Arial', sans-serif;
-    margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
@@ -13,6 +12,7 @@ body {
 
 .login-container {
     display: flex;
+    margin-left: 20%;
     max-width: 1000px;
     width: 100%;
     background-color: #F0D1AF;
@@ -119,6 +119,8 @@ button:hover {
     .login-container {
         flex-direction: column;
         padding: 20px;
+        margin-left: 0%;
+
     }
 
     .login-image {

@@ -5,7 +5,7 @@ import addIcon from '../assets/add.png';
 import receivedIcon from '../assets/receiver.png';
 import infoIcon from '../assets/information-button.png';
 import languageIcon from '../assets/languages.png';
-import { callAxiosApi, getPradeshItemsDetails } from '../api_utils';
+// import { callAxiosApi, getPradeshItemsDetails } from '../api_utils';
 import InfoPopup from '../components/InfoPopup';
 import VangiForm from './VangiForm';
 import '../styles/VangiForm.css';
@@ -21,7 +21,7 @@ function DetailPradeshPage() {
   const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
   const fetchPradeshData = async () => {
     try {
-      const response = await callAxiosApi(getPradeshItemsDetails(id), { pradeshId: id });
+      // const response = await callAxiosApi(getPradeshItemsDetails(id), { pradeshId: id });
       setPradeshData(response.data.data);
       console.log(response.data.data);
       setIsLoading(false);

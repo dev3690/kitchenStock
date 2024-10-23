@@ -4,6 +4,8 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import DetailPradeshPage from './pages/DetailPradeshPage';
 import VangiForm from './pages/VangiForm';
+import CategoryDetailPage from './pages/CategoryDetailPage';
+import ReportsPage from './pages/ReportsPage';
 import './App.css';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 
@@ -18,9 +20,8 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
     return <Navigate to="/login" />;
   }
 
-  if (adminOnly && !isAdmin()) {
-    return <Navigate to="/dashboard" />;
-  }
+  
+   
 
   return children;
 };
@@ -33,38 +34,55 @@ function App() {
   };
 
   return (
-    <AuthProvider>
+    // <AuthProvider>
       <Router>
         <Routes>
           <Route path="/login" element={<LoginPage language={language} />} />
           <Route
             path="/dashboard"
             element={
-              <ProtectedRoute>
-                <DashboardPage changeLanguage={changeLanguage} language={language} />
-              </ProtectedRoute>
+              // <ProtectedRoute className="dashboard-page">
+                <DashboardPage className="dashboard-page" changeLanguage={changeLanguage} language={language} />
+              // </ProtectedRoute>
             }
           />
           <Route
             path="/detail/:id"
             element={
-              <ProtectedRoute>
+              // <ProtectedRoute>
                 <DetailPradeshPage />
-              </ProtectedRoute>
+              // </ProtectedRoute>
             }
           />
           <Route
             path="/vangi-form"
             element={
-              <ProtectedRoute adminOnly={true}>
+              // <ProtectedRoute adminOnly={true}>
                 <VangiForm />
-              </ProtectedRoute>
+              // </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/category/:id"
+            element={
+              // <ProtectedRoute>
+                <CategoryDetailPage />
+              //  </ProtectedRoute> 
+            }
+          />
+          <Route
+            path="/reports"
+            element={
+              <ReportsPage
+                changeLanguage={changeLanguage}
+                language={language}
+              />
             }
           />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </Router>
-    </AuthProvider>
+    //  </AuthProvider> 
   );
 }
 

@@ -1,85 +1,85 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/DashboardPage.css";
-import { dashboardApi, callAxiosApi, getPradeshItemsDetails, downloadPradeshReceivedItems } from "../api_utils";
 import { AuthContext } from '../context/AuthContext';
 import AddItemPopup from '../components/AddItemPopup';
+import { FaSearch } from 'react-icons/fa';
 
 function DashboardPage({ changeLanguage, language }) {
   const navigate = useNavigate();
-  const [cardData, setCardData] = useState([]);
-  const { logout, userRole } = useContext(AuthContext);
+  // const { logout, userRole } = useContext(AuthContext);
   const [currentLanguage, setCurrentLanguage] = useState('eng');
   const [isAddItemPopupOpen, setIsAddItemPopupOpen] = useState(false);
-  const [selectedPradeshId, setSelectedPradeshId] = useState(null);
-  const [selectedPradeshName, setSelectedPradeshName] = useState(null);
-
-  const handleOpenAddItemPopup = (pradeshId, pradeshName) => {
-    setSelectedPradeshId(pradeshId);
-    setSelectedPradeshName(pradeshName);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterType, setFilterType] = useState('all');
+  
+  const categories = [
+    { id: 1, nameEng: "Grains", nameGuj: "અનાજ" },
+    { id: 2, nameEng: "Dairy Products", nameGuj: "દૂધની વસ્તુઓ" },
+    { id: 3, nameEng: "Vegetables", nameGuj: "શાકભાજી" },
+    { id: 4, nameEng: "Fruits", nameGuj: "ફળો" },
+    { id: 5, nameEng: "Spices", nameGuj: "મસાલા" },
+    { id: 6, nameEng: "Oils", nameGuj: "તેલ" },
+    { id: 7, nameEng: "Snacks", nameGuj: "નાસ્તો" },
+    { id: 8, nameEng: "Miscellaneous", nameGuj: "વિવિધ" },
+  ];
+  const [filteredCategories, setFilteredCategories] = useState(categories);
+  
+  const handleOpenAddItemPopup = (categoryId, categoryName) => {
+    setSelectedCategory({ id: categoryId, name: categoryName });
     setIsAddItemPopupOpen(true);
   };
-  useEffect(() => {
-    const fetchPradeshData = async () => {
-      try {
-        const response = await callAxiosApi(dashboardApi);
-        const pradeshData = response.data.data;
-        setCardData(pradeshData);
-        console.log(pradeshData);
-      } catch (error) {
-        console.error("Error fetching pradesh data:", error);
-      }
-    };
-    fetchPradeshData();
-  }, []);
 
-  const handleDownload = async () => {
-    try {
-      console.log('Download button clicked');
-      const response = await callAxiosApi(downloadPradeshReceivedItems(), {}, 'arraybuffer');
-
-      const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      const url = window.URL.createObjectURL(blob);
-
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = 'pradesh_received_items.xlsx';
-      document.body.appendChild(a);
-      a.click();
-
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-    } catch (error) {
-      console.error("Error downloading Pradesh received items:", error);
-    }
+  const handleCardClick = (categoryId) => {
+    navigate(`/category/${categoryId}`);
+  };
+  const handlelogout = () => {
+    navigate(`/login`);
   };
 
-  const handleCardClick = (pradeshId) => {
-    navigate(`/detail/${pradeshId}`);
-  };
-  const handleLanguageChange = () => {
+  const handleLanguageChange = () => {  
     setCurrentLanguage(prev => prev === 'eng' ? 'guj' : 'eng');
   };
 
-  const refreshDashboardData = async () => {
-    try {
-      const response = await callAxiosApi(dashboardApi);
-      if (response.data && response.data.data) {
-        setCardData(response.data.data);
+  const handleFilter = () => {
+    const filtered = categories.filter(category => {
+      const matchesSearch = 
+        category.nameEng.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        category.nameGuj.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      if (filterType === 'all') return matchesSearch;
+      if (filterType === 'category') return matchesSearch;
+      if (filterType === 'item') {
+        // Assuming each category has an 'items' array. If not, you'll need to adjust this logic.
+        return category.items && category.items.some(item => 
+          item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
       }
-    } catch (error) {
-      console.error("Error refreshing dashboard data:", error);
-    }
+      return false;
+    });
+    setFilteredCategories(filtered);
   };
+
+    useEffect(() => {
+      handleFilter();
+    }, [searchTerm, filterType]);
 
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
         <div className="header-icons left-icons">
         </div>
-        <h1 className="dashboard-header-name">Annakut Mahotsav 2024</h1>
+        <h1 className="dashboard-header-name">Kitchen Stock</h1>
         <div className="header-icons right-icons">
+          <button className="icon-button" onClick={() => navigate('/reports')}>
+            <img
+              src="/assets/reports.png"
+              alt="Reports"
+              style={{ backgroundColor: '#F0D1AF' }}
+              className="icon"
+            />
+          </button>
           <button className="icon-button" onClick={handleLanguageChange}>
             <img
               src="/assets/languages.png"
@@ -88,92 +88,56 @@ function DashboardPage({ changeLanguage, language }) {
               className="icon"
             />
           </button>
-          <button className="icon-button" onClick={logout}>
-            {/* <img src="/assets/logout.png" alt="Logout" className="icon" style={{ backgroundColor: '#F0D1AF' }} /> */}
+          <button className="icon-button" onClick={handlelogout}>
             <img src="/assets/logout.png" alt="Logout" className="icon" style={{ backgroundColor: '#F0D1AF' }} />
           </button>
         </div>
       </div>
+      <div className="search-container">
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder={currentLanguage === 'eng' ? "Search..." : "     શોધો..."}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <FaSearch className="search-icon" />
+        </div>
+      </div>
       <div className="card-container">
-        {cardData.map((pradesh, index) => (
+        {filteredCategories.map((category) => (
           <div
-            key={pradesh.pId || index}
+            key={category.id}
             className="card"
-            onClick={() => handleCardClick(pradesh.pId)}
+            onClick={() => handleCardClick(category.id)}
             style={{ backgroundColor: '#FFFFFF66' }}
           >
             <div className="card-header">
-              {userRole === true && (
+              {/* {userRole === true && ( */}
                 <button className="assign-button" onClick={(e) => {
                   e.stopPropagation();    
-                  handleOpenAddItemPopup(pradesh.pId, currentLanguage === 'eng' ? pradesh.lastNameEng : pradesh.lastNameGuj);
+                  handleOpenAddItemPopup(category.id, currentLanguage === 'eng' ? category.nameEng : category.nameGuj);
                 }}>
-                  <img src="/assets/add1.png" alt="Assign Items" className="icon" />
+                  <img src="/assets/add1.png" alt="Add Items" className="icon" />
                 </button>
-              )}
+              {/* )} */}
             </div>
-            <h2 className="card-title" style={{ color: '#333333' }}>
-              {currentLanguage === 'eng' ? (pradesh.lastNameEng || "Pradesh Name") : (pradesh.lastNameGuj || "પ્રદેશ નામ")}
+            <h2 className="card-title" style={{ color: '#333333', fontSize: '1.5rem', textAlign: 'center' }}>
+              {currentLanguage === 'eng' ? category.nameEng : category.nameGuj}
             </h2>
-            <div className="circular-progress">
-              <svg viewBox="0 0 36 36" className="circular-chart">
-                <path
-                  className="circle-bg"
-                  d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"
-                />
-                <path
-                  className="circle"
-                  strokeDasharray={`${Math.min(pradesh.receivedPercentage, 100)}, 100`}
-                  d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"
-                />
-                <text x="18" y="18" className="percentage-text" style={{ fill: '#333333' }}>
-                  <tspan x="18" dy="-0.2em" className="percentage-value">
-                    {Math.round(pradesh.receivedPercentage)}%
-                  </tspan>
-                  <tspan x="18" dy="1.6em" className="quantity-text">
-                    {pradesh.totalReceivedQty}/{pradesh.totalAssignedQty}
-                  </tspan>
-                </text>
-              </svg>
-            </div>
-            <p className="card-title-sant" style={{ color: '#333333' }}>
-              {currentLanguage === 'eng' ? (pradesh.pSantEng || "Pradesh Sant Name") : (pradesh.pSantGuj || "પ્રદેશ સંત નામ")}
-            </p>
           </div>
         ))}
       </div>
-      <button className="floating-download-button" onClick={handleDownload}>
-        <img
-          src="/assets/download.png"
-          alt="Download"
-          className="download-icon"
-        />
-      </button>
       <AddItemPopup
         isOpen={isAddItemPopupOpen}
         onClose={() => setIsAddItemPopupOpen(false)}
         onSubmit={(newItem) => {
-          console.log('New item assigned:', newItem);
-          setCardData(prevCardData => {
-            return prevCardData.map(card => {
-              if (card.pId === selectedPradeshId) {
-                return {
-                  ...card,
-                  ...newItem.updatedData
-                };
-              }
-              return card;
-            });
-          });
+          console.log('New item added:', newItem);
           setIsAddItemPopupOpen(false);
-          refreshDashboardData();
+          // You may want to refresh the data or update the state here
         }}
-        pradeshId={selectedPradeshId}
-        pradeshName={selectedPradeshName}
+        categoryId={selectedCategory?.id}
+        categoryName={selectedCategory?.name}
         currentLanguage={currentLanguage}
       />
     </div>
