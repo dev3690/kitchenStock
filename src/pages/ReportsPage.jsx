@@ -80,7 +80,7 @@ function ReportsPage({ currentLanguage, handleLanguageChange }) {
             </div>
             <div className="reports-subheader">
                 <div className="report-title-container">
-                    <h2>Report</h2>
+                    <h2>Reports</h2>
                 </div>
                 <button className="filter-button" onClick={() => setIsFilterPopupOpen(true)}>
                     <FaFilter /> Filter
