@@ -20,8 +20,8 @@ function LoginPage({ language }) {
 
     return (
         <div className="login-container">
-            <div className="login-image">
-                <img src="/assets/annakoot_photo.jpg" alt="Decorative temple" />
+            <div className="login-image" >
+                <img src="/assets/loginphoto.png" alt="Decorative temple"  />
             </div>
             <div className="login-form-container">
                 <LoginForm language={language} 

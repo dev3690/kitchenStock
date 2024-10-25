@@ -5,6 +5,8 @@ import { AuthContext } from "../context/AuthContext";
 import AddItemPopup from "../components/AddItemPopup";
 import PlusFormPopup from "../components/PlusFormPopup";
 import MinusFormPopup from "../components/MinusFormPopup";
+import Header from '../components/Header';
+
 
 function CategoryDetailPage() {
   const { id } = useParams();
@@ -95,22 +97,24 @@ function CategoryDetailPage() {
 
   return (
     <div className="category-detail-container">
+      <Header
+        currentLanguage={currentLanguage}
+        handleLanguageChange={handleLanguageChange}
+      />
       <div className="category-detail-header">
-        <h1>
+        <h1 style={{
+          backgroundColor: "#ffffff",
+          // padding: "10px 200px",
+          borderRadius: "50px",
+          // fontSize: "2rem",
+          color: "#2B3674"
+        }}>
           {currentLanguage === "eng"
             ? // categories.find(c => c.id === parseInt(id))?.nameEng
-              "Grains"
+            "Grains"
             : // categories.find(c => c.id === parseInt(id))?.nameGuj}
-              "અનાજ"}
+            "અનાજ"}
         </h1>
-        <button className="icon-button" style={{}} onClick={handleLanguageChange}>
-          <img
-            src="/assets/languages.png"
-            alt="Change Language"
-            className="icon"
-            style={{width: "50px", height: "50px"}} 
-          />
-        </button>
       </div>
       <div className="card-container">
         {grainCards.map((card) => (
@@ -123,16 +127,16 @@ function CategoryDetailPage() {
               <button
                 className="quantity-button"
                 onClick={() => handleQuantityChange(card.id, 1)}
-                style={{fontSize: "102px"}}
+                style={{ fontSize: "102px" }}
               >
-                <img src="/assets/add.png" alt="Increase" className="icon"   />
+                <img src="/assets/new1.png" alt="Increase" className="icon" />
               </button>
               <button
                 className="quantity-button"
                 onClick={() => handleQuantityChange(card.id, -1)}
               >
                 <img
-                  src="/assets/minus.png"
+                  src="/assets/minus1.png"
                   alt="Decrease"
                   className="icon"
 

@@ -31,13 +31,14 @@ function LoginForm({ language }) {
       <div className="login-form-container">
         <div className="login-icon">
           <h1>Login Page </h1>
-          <img
+          {/* <img
             src="/assets/laptop_image1.png"
             style={{ alignItems: "center" }}
             alt="Laptop Image"
             height={200}
             width={200}
-          />
+          /> */}
+          <p style={{fontSize: "20px"}}>  Please enter your Mobile and Password to Continue</p>
         </div>
         <form onSubmit={handleSubmit} className="login-form">
           <div className="input-group">
@@ -45,7 +46,7 @@ function LoginForm({ language }) {
               type="text"
               placeholder="Mobile"
               value={mobile}
-              style={{ fontSize: "1.5rem" }}
+              style={{ fontSize: "1rem", borderRadius: "5px" }}
               onChange={(e) => setUsername(e.target.value)}
               required
             />
@@ -55,7 +56,7 @@ function LoginForm({ language }) {
                 alt="User Icon"
                 height={20}
                 width={20}
-              />
+              />  
             </span>
           </div>
           <div className="input-group">
@@ -63,7 +64,7 @@ function LoginForm({ language }) {
               type="password"
               placeholder="Password"
               value={password}
-              style={{ fontSize: "1.5rem" }}
+              style={{ fontSize: "1rem", borderRadius: "5px" }}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
@@ -76,7 +77,7 @@ function LoginForm({ language }) {
               />
             </span>
           </div>
-          <button type="submit" className="login-submit-button" style={{ fontSize: "1.5rem" }}>
+          <button type="submit" className="login-submit-button" style={{ fontSize: "1rem", borderRadius: "5px" }}>
             Login
           </button>
         </form>

@@ -44,8 +44,8 @@ input, select, textarea {
   padding: 8px;
   border: 1px solid #0060ba;
   /* background-color: #ebe4dc; */
-  background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 50px;
+  background-color: #F5F6FA;
+  border-radius: 4px;
   font-size: 16px;
   box-sizing: border-box;
 }
@@ -74,9 +74,10 @@ select {
 .submit-button {
   border: none;
   margin: 20px 0px 0px 0px;
-  border-radius: 40px;
+  padding: 10px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 26px;  
+  font-size: 20px;  
   transition: background-color 0.3s;
 }
 

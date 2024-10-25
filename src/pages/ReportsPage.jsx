@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/ReportsPage.css';
 import { FaFilter, FaArrowLeft } from 'react-icons/fa';
 import FilterPopup from '../components/FilterPopup';
+import Header from '../components/Header';
+
 
 const reportData = [
     { slNo: '01.', name: 'Wheat', unit: 'KG', quantity: 8, category: 'Grains', date: '2024-01-01', seva: '40', given: 10, used: 8 },
@@ -63,7 +65,7 @@ function ReportsPage({ currentLanguage, handleLanguageChange }) {
 
     return (
         <div className="reports-container">
-            <div className="reports-header">
+            {/* <div className="reports-header">
                 <button className="back-button" onClick={() => navigate('/dashboard')}>
                     <FaArrowLeft />
                 </button>
@@ -77,7 +79,11 @@ function ReportsPage({ currentLanguage, handleLanguageChange }) {
                         />
                     </button>
                 </div>
-            </div>
+            </div> */}
+            <Header
+                currentLanguage={currentLanguage}
+                handleLanguageChange={handleLanguageChange}
+            />
             <div className="reports-subheader">
                 <div className="report-title-container">
                     <h2>Reports</h2>

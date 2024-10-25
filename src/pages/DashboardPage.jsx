@@ -4,6 +4,7 @@ import "../styles/DashboardPage.css";
 import { AuthContext } from '../context/AuthContext';
 import AddItemPopup from '../components/AddItemPopup';
 import { FaSearch } from 'react-icons/fa';
+import Header from '../components/Header';
 
 function DashboardPage({ changeLanguage, language }) {
   const navigate = useNavigate();
@@ -67,34 +68,10 @@ function DashboardPage({ changeLanguage, language }) {
 
   return (
     <div className="dashboard-container">
-      <div className="dashboard-header">
-        <div className="header-icons left-icons">
-        </div>
-        <h1 className="dashboard-header-name">Kitchen Stock</h1>
-        <div className="header-icons right-icons">
-          <button className="icon-button" onClick={() => navigate('/reports')}>
-            <img
-              src="/assets/reports.png"
-              alt="Reports"
-              style={{ backgroundColor: '#f0f0f0',   width: "46px", height: "44px"
-                }}
-              className="icon"
-            />
-          </button>
-          <button className="icon-button" onClick={handleLanguageChange}>
-            <img
-              src="/assets/languages.png"
-              alt="Change Language"
-              style={{ backgroundColor: '#f0f0f0',   width: "46px",
-                height: "44px"}}
-              className="icon"
-            />
-          </button>
-          <button className="icon-button" onClick={handlelogout} >
-            <img src="/assets/logout.png" alt="Logout" className="icon" style={{ backgroundColor: '#f0f0f0',   width: "46px", height: "44px" }} />
-          </button>
-        </div>
-      </div>
+      <Header 
+        currentLanguage={currentLanguage} 
+        handleLanguageChange={handleLanguageChange}
+      />
       <div className="search-container">
         <div className="search-bar">
           <input
