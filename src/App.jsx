@@ -2,8 +2,6 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import { useState, useContext } from 'react';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
-import DetailPradeshPage from './pages/DetailPradeshPage';
-import VangiForm from './pages/VangiForm';
 import CategoryDetailPage from './pages/CategoryDetailPage';
 import ReportsPage from './pages/ReportsPage';
 import './App.css';
@@ -43,22 +41,6 @@ function App() {
             element={
               // <ProtectedRoute className="dashboard-page">
                 <DashboardPage className="dashboard-page" changeLanguage={changeLanguage} language={language} />
-              // </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/detail/:id"
-            element={
-              // <ProtectedRoute>
-                <DetailPradeshPage />
-              // </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/vangi-form"
-            element={
-              // <ProtectedRoute adminOnly={true}>
-                <VangiForm />
               // </ProtectedRoute>
             }
           />

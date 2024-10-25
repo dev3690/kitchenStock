@@ -6,9 +6,10 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #F0D1AF;
+  background-color: rgba(244, 247, 254, 1);
   width: 100%;
 }
+
 
 .login-page,
 .dashboard-page {
@@ -20,3 +21,4 @@ body {
   max-width: 400px;
   width: 40%;
 }
+

@@ -30,7 +30,7 @@ function PlusFormPopup({ isOpen, onClose, onSubmit, itemName, defaultUnit, curre
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="itemName">
-              {currentLanguage === 'eng' ? 'Item Name' : 'વ���્તુનું નામ'}:
+              {currentLanguage === 'eng' ? 'Item Name' : 'વતુનું નામ'}:
             </label>
             <input
               type="text"

@@ -5,7 +5,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #dd7729;
+    background-color: #298fdd;
     /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); */
     /* border: 1px solid ; */
 }
@@ -46,7 +46,7 @@ body {
 }
 
 h1 {
-    color: #cc6600;
+    color: #250680;
     font-size: 3.5rem;
     margin-bottom: 40px;
 }
@@ -97,13 +97,13 @@ input:focus {
     color: #999;
 }
 
-button {
+.login-submit-button {
     width: 50%;
     margin-left: 25%;
     margin-top: 1rem;
     padding: 0.75rem;
     font-size: 1rem;
-    background-color: #cc6600;
+    background-color: #0080b3;
     color: white;
     border: none;
     border-radius: 25px;
@@ -111,8 +111,8 @@ button {
     transition: background-color 0.3s;
 }
 
-button:hover {
-    background-color: #b35900;
+.login-submit-button:hover {
+    background-color: #0080b3;
 }
 
 @media (max-width: 768px) {

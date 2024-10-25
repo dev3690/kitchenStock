@@ -1,6 +1,6 @@
 .category-detail-container {
   padding: 20px;
-  background-color: #F0D1AF;
+  background-color: rgba(244, 247, 254, 1);
   min-height: 90vh;
   width: 95%;
 }
@@ -35,26 +35,10 @@
 .card-header {
   display: flex;
   justify-content: center;
-  margin-right: 40px;
-  gap: 0.5rem;
-}
-
-.assign-button {
-  background: #F0D1AF;
-  border: none;
-  cursor: pointer;
-  padding: 5px;
-  transition: all 0.3s ease;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
   align-items: center;
-  justify-content: center;
-}
-
-.assign-button:hover {
-  background-color: #dd7729;
+  margin-right: 40px;
+  margin-left: 40px;
+  gap: 2.5rem;
 }
 
 .card-title {
@@ -65,7 +49,7 @@
 }
 
 .quantity-button {
-  background: #F0D1AF;
+  background: #e2def8;
   border: none;
   cursor: pointer;
   padding: 5px;
@@ -73,13 +57,18 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
+  font-size: 3.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+.quantity-button img {
+  width: 46px;
+  height: 44px;
+}
 
 .quantity-button:hover {
-  background-color: #dd7729;
+  background-color: #cec8f3;
 }
 
 .card-quantity {

@@ -76,7 +76,8 @@ function DashboardPage({ changeLanguage, language }) {
             <img
               src="/assets/reports.png"
               alt="Reports"
-              style={{ backgroundColor: '#F0D1AF' }}
+              style={{ backgroundColor: '#f0f0f0',   width: "46px", height: "44px"
+                }}
               className="icon"
             />
           </button>
@@ -84,12 +85,13 @@ function DashboardPage({ changeLanguage, language }) {
             <img
               src="/assets/languages.png"
               alt="Change Language"
-              style={{ backgroundColor: '#F0D1AF' }}
+              style={{ backgroundColor: '#f0f0f0',   width: "46px",
+                height: "44px"}}
               className="icon"
             />
           </button>
-          <button className="icon-button" onClick={handlelogout}>
-            <img src="/assets/logout.png" alt="Logout" className="icon" style={{ backgroundColor: '#F0D1AF' }} />
+          <button className="icon-button" onClick={handlelogout} >
+            <img src="/assets/logout.png" alt="Logout" className="icon" style={{ backgroundColor: '#f0f0f0',   width: "46px", height: "44px" }} />
           </button>
         </div>
       </div>
@@ -110,15 +112,15 @@ function DashboardPage({ changeLanguage, language }) {
             key={category.id}
             className="card"
             onClick={() => handleCardClick(category.id)}
-            style={{ backgroundColor: '#FFFFFF66' }}
+            style={{ backgroundColor: '#ffffff' }}
           >
             <div className="card-header">
               {/* {userRole === true && ( */}
                 <button className="assign-button" onClick={(e) => {
                   e.stopPropagation();    
                   handleOpenAddItemPopup(category.id, currentLanguage === 'eng' ? category.nameEng : category.nameGuj);
-                }}>
-                  <img src="/assets/add1.png" alt="Add Items" className="icon" />
+                }}> 
+                  <img src="/assets/new1.png" alt="Add Items" className="icon"  style={{ width: "35px", height: "35px"}} />
                 </button>
               {/* )} */}
             </div>

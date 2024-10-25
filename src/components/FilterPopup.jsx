@@ -149,7 +149,7 @@ function FilterPopup({
           />
           <div className="range-values">
             <span>₹{filterGivenRange.min}</span>
-            <span>���{filterGivenRange.max}</span>
+            <span>{filterGivenRange.max}</span>
           </div>
         </div>
 

@@ -5,16 +5,16 @@ import { FaFilter, FaArrowLeft } from 'react-icons/fa';
 import FilterPopup from '../components/FilterPopup';
 
 const reportData = [
-    { slNo: '01.', name: 'Yash', unit: 'KG', quantity: 8, category: 'Grains', date: '2024-01-01', seva: 'Kitchen', given: 10, used: 8 },
-    { slNo: '02.', name: 'Jay', unit: 'KG', quantity: 36, category: 'Grains', date: '2024-02-02', seva: 'Pantry', given: 40, used: 36 },
-    { slNo: '03.', name: 'Ram', unit: 'KG', quantity: 12, category: 'Grains', date: '2024-03-03', seva: 'Kitchen', given: 15, used: 12 },
-    { slNo: '04.', name: 'Karan', unit: 'Liter', quantity: 25, category: 'Vegetables', date: '2024-04-04', seva: 'Kitchen', given: 30, used: 25 },
-    { slNo: '05.', name: 'Arjun', unit: 'Liter', quantity: 5, category: 'Miscellaneous', date: '2024-05-05', seva: 'Pantry', given: 8, used: 5 },
-    { slNo: '06.', name: 'Jaydeep', unit: 'KG', quantity: 14, category: 'Vegetables', date: '2024-06-06', seva: 'Kitchen', given: 20, used: 14 },
-    { slNo: '07.', name: 'Yashraj', unit: 'KG', quantity: 9, category: 'Miscellaneous', date: '2024-07-07', seva: 'Pantry', given: 12, used: 9 },
-    { slNo: '08.', name: 'Pratik', unit: 'KG', quantity: 3, category: 'Miscellaneous', date: '2024-08-08', seva: 'Kitchen', given: 5, used: 3 },
-    { slNo: '09.', name: 'Jaydeep', unit: 'KG', quantity: 14, category: 'Vegetables', date: '2024-09-09', seva: 'Kitchen', given: 18, used: 14 },
-    { slNo: '10.', name: 'Yashraj', unit: 'KG', quantity: 9, category: 'Miscellaneous', date: '2024-10-10', seva: 'Pantry', given: 15, used: 9 },
+    { slNo: '01.', name: 'Wheat', unit: 'KG', quantity: 8, category: 'Grains', date: '2024-01-01', seva: '40', given: 10, used: 8 },
+    { slNo: '02.', name: 'Corn', unit: 'KG', quantity: 36, category: 'Grains', date: '2024-02-02', seva: '10', given: 40, used: 36 },
+    { slNo: '03.', name: 'Rice', unit: 'KG', quantity: 12, category: 'Grains', date: '2024-03-03', seva: '11', given: 15, used: 12 },
+    { slNo: '04.', name: 'Millet', unit: 'Liter', quantity: 25, category: 'Vegetables', date: '2024-04-04', seva: '9', given: 30, used: 25 },
+    { slNo: '05.', name: 'Buttermilk', unit: 'Liter', quantity: 5, category: 'Miscellaneous', date: '2024-05-05', seva: '20', given: 8, used: 5 },
+    { slNo: '06.', name: 'Barley', unit: 'KG', quantity: 14, category: 'Vegetables', date: '2024-06-06', seva: '30', given: 20, used: 14 },
+    { slNo: '07.', name: 'Oats', unit: 'KG', quantity: 9, category: 'Miscellaneous', date: '2024-07-07', seva: '14', given: 12, used: 9 },
+    { slNo: '08.', name: 'Pratik', unit: 'KG', quantity: 3, category: 'Miscellaneous', date: '2024-08-08', seva: '15', given: 5, used: 3 },
+    { slNo: '09.', name: 'Barley', unit: 'KG', quantity: 14, category: 'Vegetables', date: '2024-09-09', seva: '5', given: 18, used: 14 },
+    { slNo: '10.', name: 'Oats', unit: 'KG', quantity: 9, category: 'Miscellaneous', date: '2024-10-10', seva: '18', given: 15, used: 9 },
 ];
 
 function ReportsPage({ currentLanguage, handleLanguageChange }) {

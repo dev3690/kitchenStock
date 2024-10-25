@@ -103,11 +103,12 @@ function CategoryDetailPage() {
             : // categories.find(c => c.id === parseInt(id))?.nameGuj}
               "અનાજ"}
         </h1>
-        <button className="icon-button" onClick={handleLanguageChange}>
+        <button className="icon-button" style={{}} onClick={handleLanguageChange}>
           <img
             src="/assets/languages.png"
             alt="Change Language"
             className="icon"
+            style={{width: "50px", height: "50px"}} 
           />
         </button>
       </div>
@@ -122,8 +123,9 @@ function CategoryDetailPage() {
               <button
                 className="quantity-button"
                 onClick={() => handleQuantityChange(card.id, 1)}
+                style={{fontSize: "102px"}}
               >
-                <img src="/assets/add1.png" alt="Increase" className="icon" />
+                <img src="/assets/add.png" alt="Increase" className="icon"   />
               </button>
               <button
                 className="quantity-button"
@@ -133,6 +135,7 @@ function CategoryDetailPage() {
                   src="/assets/minus.png"
                   alt="Decrease"
                   className="icon"
+
                 />
               </button>
             </div>

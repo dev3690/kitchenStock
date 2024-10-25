@@ -76,7 +76,7 @@ function LoginForm({ language }) {
               />
             </span>
           </div>
-          <button type="submit" style={{ fontSize: "1.5rem" }}>
+          <button type="submit" className="login-submit-button" style={{ fontSize: "1.5rem" }}>
             Login
           </button>
         </form>
